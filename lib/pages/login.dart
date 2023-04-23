@@ -3,13 +3,14 @@ import 'package:impact_circle/components/my_button.dart';
 import 'package:impact_circle/components/my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
+import 'package:flutter/gestures.dart';
 
 class Login extends StatefulWidget {
-  // final VoidCallback onClickedSignUp;
+  final VoidCallback onClickedSignUp;
 
   const Login({
     Key? key,
-    // required this.onClickedSignUp,
+    required this.onClickedSignUp,
   }) : super(key: key);
 
   @override
@@ -180,27 +181,45 @@ class _LoginState extends State<Login> {
                 //   ],
                 // ),
 
-                const SizedBox(height: 50),
+                // const SizedBox(height: 50),
 
                 // Not a member? Register now
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
-                      'Not a member?',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      'Register now',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: const [
+                //     Text(
+                //       'Not a member?',
+                //       style:
+                //           TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                //     ),
+                //     SizedBox(width: 4),
+                //     Text(
+                //       'Register now',
+                //       style: TextStyle(
+                //         color: Colors.blue,
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ],
+                // )
+                 const SizedBox(height: 24),
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(color: Colors.white, fontSize: 20),
+                text: 'New user?  ',
+                children: [
+                  TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = widget.onClickedSignUp,
+                    text: 'Sign Up',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Theme.of(context).colorScheme.secondary
+                    )
+                  )
+                ]
+              )
+            )
               ],
             ),
           ),
