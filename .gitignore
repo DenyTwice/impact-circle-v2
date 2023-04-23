@@ -31,6 +31,19 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+gradle-wrapper.jar
+.gradle
+/captures/
+/gradlew
+/gradlew.bat
+/local.properties
+GeneratedPluginRegistrant.java
+
+# Remember to never publicly share your keystore.
+# See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
+key.properties
+**/*.keystore
+**/*.jks
 
 # Symbolication related
 app.*.symbols
