@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:impact_circle/components/my_button.dart';
 import 'package:impact_circle/components/my_textfield.dart';
-import 'package:impact_circle/components/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:impact_circle/main.dart';
 
 class Login extends StatefulWidget {

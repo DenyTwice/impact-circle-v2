@@ -1,6 +1,9 @@
 # impact_circle
 
-A new Flutter project.
+Impact circle is a mobile app that brings communities together through volunteer work.
+## Requirements
+ 
+- google-services.json
 
 ## Getting Started
 
