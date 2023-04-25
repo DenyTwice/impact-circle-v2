@@ -1,16 +1,16 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 
-
 class Register extends StatefulWidget {
-
   final VoidCallback onClickedSignUp;
+ 
 
   const Register({
     Key? key,
     required this.onClickedSignUp,
-  }) : super(key : key);
+  }) : super(key: key);
 
   @override
   State<Register> createState() => _RegisterState();
@@ -69,7 +69,9 @@ class _RegisterState extends State<Register> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               const Text(
                 'REGISTER',
                 style: TextStyle(
@@ -86,9 +88,8 @@ class _RegisterState extends State<Register> {
                     obscureText: false,
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                        borderSide: const BorderSide(color: Colors.white),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       hintText: 'Username',
                       fillColor: Colors.grey.shade200,
@@ -108,16 +109,14 @@ class _RegisterState extends State<Register> {
                     textAlign: TextAlign.center,
                     obscureText: false,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                        borderSide: const BorderSide(color: Colors.white),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       hintText: 'Email',
                       fillColor: Colors.grey.shade200,
                       filled: true,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                        borderSide: const BorderSide(color: Colors.white),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                     )),
               ),
@@ -130,16 +129,14 @@ class _RegisterState extends State<Register> {
                     textAlign: TextAlign.center,
                     obscureText: true,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                        borderSide: const BorderSide(color: Colors.white),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       hintText: 'Password',
                       fillColor: Colors.grey.shade200,
                       filled: true,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50.0),
-                        borderSide: const BorderSide(color: Colors.white),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                     )),
               ),
@@ -163,7 +160,22 @@ class _RegisterState extends State<Register> {
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-              )
+              ),
+              const SizedBox(height: 25),
+              RichText(
+                  text: TextSpan(
+                      recognizer: TapGestureRecognizer(),
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                      text: 'Already a User?  ',
+                      children: [
+                    TextSpan(
+                        text: 'Login',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = widget.onClickedSignUp,
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Theme.of(context).colorScheme.secondary))
+                  ]))
             ],
           ),
         ),
