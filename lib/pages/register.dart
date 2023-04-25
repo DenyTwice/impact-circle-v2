@@ -1,16 +1,17 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
+import 'package:flutter/gestures.dart';
 
 class Register extends StatefulWidget {
+
   final VoidCallback onClickedSignUp;
- 
+
 
   const Register({
     Key? key,
     required this.onClickedSignUp,
-  }) : super(key: key);
+  }) : super(key : key);
 
   @override
   State<Register> createState() => _RegisterState();
@@ -70,9 +71,8 @@ class _RegisterState extends State<Register> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              
+              const SizedBox(height: 20,),
               const Text(
                 'REGISTER',
                 style: TextStyle(
