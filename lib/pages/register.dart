@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
@@ -17,6 +18,16 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  int _count = 0;
+
+  final database = FirebaseDatabase.instance.ref();
+
+  void incrementCount() {
+    setState(() {
+      _count++;
+    });
+  }
+
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -35,10 +46,27 @@ class _RegisterState extends State<Register> {
         password: passwordController.text,
       );
     } on FirebaseException catch (e) {
+      print(e);
       // TODO_ Show error to user
     }
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    writeToDatabase();
+  }
+
+  int writeToDatabase() {
+    final user = database.child('/user_$_count/');
+    user.set({
+        // 'username': usernameController.text,
+        // 'email': emailController.text,
+        'avater_url': 'https://unsplash.com/photos/9Ozb6a3DTcI',
+        'requests_done': 0,
+      }).then((_) => print("yes"));
+  
+    incrementCount();
+    print(_count);
+
+    return _count;
   }
 
   @override

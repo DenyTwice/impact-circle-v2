@@ -42,6 +42,50 @@ class Home extends StatelessWidget {
               ),
               onPressed: () => FirebaseAuth.instance.signOut(),
             ),
+            
+            const SizedBox(height: 40),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
+              icon: const Icon(Icons.pageview, size: 32),
+              label: const Text(
+                'View Communities',
+                style: TextStyle(fontSize: 24),
+              ),
+              onPressed: () => FirebaseAuth.instance.signOut(),
+            ),
+
+            const SizedBox(height: 40),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
+              icon: const Icon(Icons.pageview, size: 32),
+              label: const Text(
+                'View Requests',
+                style: TextStyle(fontSize: 24),
+              ),
+              onPressed: () => FirebaseAuth.instance.signOut(),
+            ),
+
+            const SizedBox(height: 40),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
+              icon: const Icon(Icons.read_more, size: 32),
+              label: const Text(
+                'Create community',
+                style: TextStyle(fontSize: 24),
+              ),
+              onPressed: () => FirebaseAuth.instance.signOut(),
+            ),
+
+            const SizedBox(height: 40),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
+              icon: const Icon(Icons.read_more, size: 32),
+              label: const Text(
+                'Create Requests',
+                style: TextStyle(fontSize: 24),
+              ),
+              onPressed: () => FirebaseAuth.instance.signOut(),
+            ),
           ],
 
         ),
