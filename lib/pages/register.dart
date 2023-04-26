@@ -47,26 +47,30 @@ class _RegisterState extends State<Register> {
       );
     } on FirebaseException catch (e) {
       print(e);
-      // TODO_ Show error to user
+      //! TODO_ Show error to user
     }
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
     writeToDatabase();
   }
 
-  int writeToDatabase() {
+  void writeToDatabase() async {
+
     final user = database.child('/user_$_count/');
-    user.set({
-        // 'username': usernameController.text,
-        // 'email': emailController.text,
+
+    try {
+      await user.set({
+        'username': usernameController.text,
+        'email': emailController.text,
         'avater_url': 'https://unsplash.com/photos/9Ozb6a3DTcI',
         'requests_done': 0,
-      }).then((_) => print("yes"));
-  
-    incrementCount();
-    print(_count);
+        'communities': 'null'
+      });
+    } on Exception catch (e) {
+      print(e); //! TODO_ Block sign up
+    }
 
-    return _count;
+    incrementCount(); // TODO_ Change to last database entry += 1
   }
 
   @override
