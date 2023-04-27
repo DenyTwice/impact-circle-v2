@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^0.8.4+4
 
   line_awesome_flutter: ^1.0.1
   flutter_screenutil: ^1.0.2
@@ -32,6 +33,8 @@ flutter:
 
   assets:
     - assets/images/IMPACT.png
+    - assets/images/uu.png
+    - assets/images/user.png
   #   - images/a_dot_ham.jpeg
 
   # fonts:

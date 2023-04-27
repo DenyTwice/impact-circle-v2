@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:impact_circle/pages/add_communities.dart';
 import 'package:impact_circle/pages/user_profile.dart';
 
 class Home extends StatelessWidget {
@@ -52,6 +53,17 @@ class Home extends StatelessWidget {
                 Icons.person,
                 size: 64,
               ),
+            ),
+            const SizedBox(height: 40),
+            IconButton(
+              icon: const Icon(Icons.add),
+              iconSize: 64,
+              onPressed: () {
+                Navigator.push(
+                  context,   //to go to add page
+                  MaterialPageRoute(builder: (context) => AddCommunities()),
+                );
+              },
             ),
           ],
         ),
