@@ -10,6 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  image_picker: ^0.8.4+4
+
+  line_awesome_flutter: ^1.0.1
+  flutter_screenutil: ^1.0.2
+  animated_theme_switcher: ^1.0.5
+  
   flutter_svg: ^0.22.0
 
   cupertino_icons: ^1.0.2
