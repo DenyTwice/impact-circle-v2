@@ -33,16 +33,7 @@ class Home extends StatelessWidget {
               style: const TextStyle(fontSize: 20),
             ),
             
-            const SizedBox(height: 40),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
-              icon: const Icon(Icons.arrow_back, size: 32),
-              label: const Text(
-                'Sign Out',
-                style: TextStyle(fontSize: 24),
-              ),
-              onPressed: () => FirebaseAuth.instance.signOut(),
-            ),
+
           ],
 
         ),
