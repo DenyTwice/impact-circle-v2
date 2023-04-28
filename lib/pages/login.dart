@@ -19,8 +19,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
   // Sign in with Firebase
   Future signIn() async {
@@ -44,7 +42,10 @@ class _LoginState extends State<Login> {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  // Dispose controllers
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  // Dispose controllers as well
   @override
   void dispose() {
     emailController.dispose();

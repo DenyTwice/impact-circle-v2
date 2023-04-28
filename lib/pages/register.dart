@@ -32,7 +32,9 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  // Sign up with Firebase
   Future signUp() async {
+    
     // Show loading overlay
     showDialog(
       context: context,
@@ -54,9 +56,14 @@ class _RegisterState extends State<Register> {
     writeToDatabase();
   }
 
-  void writeToDatabase() async {
+  // void readNumUsers() async {
+  //   await database.child('/misc');
+  // }
 
+  // Adds user info to database
+  void writeToDatabase() async {
     final user = database.child('/user_$_count/');
+    // final misc = database.child('/misc/');
 
     try {
       await user.set({
@@ -66,6 +73,10 @@ class _RegisterState extends State<Register> {
         'requests_done': 0,
         'communities': 'null'
       });
+
+      // await misc.update({
+      //   'numUsers' : _count + 1
+      // });
     } on Exception catch (e) {
       print(e); //! TODO_ Block sign up
     }
@@ -207,13 +218,15 @@ class _RegisterState extends State<Register> {
                     text: 'Already a User?  ',
                     children: [
                       TextSpan(
-                          text: 'Login',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap =
-                                widget.onClickedSignUp, // Toggle to Login Page
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: Theme.of(context).colorScheme.secondary)),
+                        text: 'Login',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap =
+                              widget.onClickedSignUp, // Toggle to Login Page
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Theme.of(context).colorScheme.secondary
+                        ),
+                      ),
                     ],
                   ),
                 ),
