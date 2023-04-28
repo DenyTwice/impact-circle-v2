@@ -40,7 +40,7 @@ class _UserProfileState extends State<UserProfile> {
                         padding: EdgeInsets.only(top: 20.0),
                         child: CircleAvatar(
                           radius: 50.0,
-                          backgroundImage: _imageFile != null ? Image.file(_imageFile!) : AssetImage('assets/images/user.png'),
+                          // backgroundImage: _imageFile != null ? Image.file(_imageFile!) : AssetImage('assets/images/user.png'),
                         ),
                         
                       ),
