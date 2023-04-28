@@ -5,7 +5,7 @@ import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
 
 class Register extends StatefulWidget {
-  // Toggle between Login and Sign Up
+  //* Toggle between Login and Sign Up
   final VoidCallback onClickedSignUp;
 
   const Register({
@@ -18,10 +18,10 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  int _count = 0;
-
   final database = FirebaseDatabase.instance.ref();
 
+  //! ToDo awful code, change immediately
+  int _count = 0;
   void incrementCount() {
     setState(() {
       _count++;
@@ -32,10 +32,9 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Sign up with Firebase
+  //* Sign up with Firebase
   Future signUp() async {
-    
-    // Show loading overlay
+    //* Show loading overlay
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -49,21 +48,18 @@ class _RegisterState extends State<Register> {
       );
     } on FirebaseException catch (e) {
       print(e);
-      //! TODO_ Show error to user
+      //! ToDo Show error to user
     }
 
+    //* Remove showDialog
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    
     writeToDatabase();
   }
 
-  // void readNumUsers() async {
-  //   await database.child('/misc');
-  // }
-
-  // Adds user info to database
+  //* Adds user info to database
   void writeToDatabase() async {
     final user = database.child('/user_$_count/');
-    // final misc = database.child('/misc/');
 
     try {
       await user.set({
@@ -73,15 +69,11 @@ class _RegisterState extends State<Register> {
         'requests_done': 0,
         'communities': 'null'
       });
-
-      // await misc.update({
-      //   'numUsers' : _count + 1
-      // });
     } on Exception catch (e) {
-      print(e); //! TODO_ Block sign up
+      print(e); //! ToDo Block sign up
     }
 
-    incrementCount(); // TODO_ Change to last database entry += 1
+    incrementCount(); // ToDo Change to last database entry += 1
   }
 
   @override
@@ -94,7 +86,7 @@ class _RegisterState extends State<Register> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo
+                //* Logo
                 Stack(
                   alignment: Alignment.center,
                   children: const [
@@ -114,7 +106,7 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
 
-                // Register Text
+                //* Register Text
                 const SizedBox(height: 20),
                 const Text(
                   'REGISTER',
@@ -124,7 +116,7 @@ class _RegisterState extends State<Register> {
                       fontWeight: FontWeight.w900),
                 ),
 
-                // Username Input Field
+                //* Username Input Field
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -145,7 +137,7 @@ class _RegisterState extends State<Register> {
                       )),
                 ),
 
-                // Email Input Field
+                //* Email Input Field
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -165,7 +157,7 @@ class _RegisterState extends State<Register> {
                       )),
                 ),
 
-                // Password Input Field
+                //* Password Input Field
                 const SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -186,7 +178,7 @@ class _RegisterState extends State<Register> {
                       )),
                 ),
 
-                // Sign up button
+                //* Sign up button
                 const SizedBox(height: 25),
                 SizedBox(
                   height: 60,
@@ -209,11 +201,10 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
 
-                // Already a user? Login!
+                //* Already a user? Login!
                 const SizedBox(height: 25),
                 RichText(
                   text: TextSpan(
-                    recognizer: TapGestureRecognizer(),
                     style: const TextStyle(color: Colors.white, fontSize: 20),
                     text: 'Already a User?  ',
                     children: [
@@ -221,11 +212,10 @@ class _RegisterState extends State<Register> {
                         text: 'Login',
                         recognizer: TapGestureRecognizer()
                           ..onTap =
-                              widget.onClickedSignUp, // Toggle to Login Page
+                              widget.onClickedSignUp, //* Toggle to Login Page
                         style: TextStyle(
                             decoration: TextDecoration.underline,
-                            color: Theme.of(context).colorScheme.secondary
-                        ),
+                            color: Theme.of(context).colorScheme.secondary),
                       ),
                     ],
                   ),

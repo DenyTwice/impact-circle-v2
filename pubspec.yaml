@@ -29,7 +29,6 @@ flutter:
   uses-material-design: true
 
 assets:
-- images/user-fill.svg
   #   - images/a_dot_ham.jpeg
 
   # fonts:

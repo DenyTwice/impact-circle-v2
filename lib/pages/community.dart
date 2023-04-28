@@ -11,15 +11,15 @@ class Community extends StatefulWidget {
 
 class _CommunityState extends State<Community> {
   
-  // Adds listener method to initState()
+  //* Adds listener method to initState()
   @override
   void initState() {
     super.initState();
     _activateListeners();
   }
 
-  // Checks onValue on path and sets displayText
-  // TODO_ Append names of every community to list to make it accessible for UI 
+  //* Checks onValue on path and sets displayText
+  // ToDo Append names of every community to list to make it accessible for UI 
   void _activateListeners() {
     database.child('/communities/"comm_id"/').onValue.listen((event) {
       Map<String, dynamic> communityMap = // ?
@@ -31,7 +31,7 @@ class _CommunityState extends State<Community> {
   }
 
   String displayText = 'Data';
-  final database = FirebaseDatabase.instance.ref(); // Access to "root path" of database
+  final database = FirebaseDatabase.instance.ref(); //* Access to "root path" of database
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _CommunityState extends State<Community> {
         title: const Text('View Communities'),
       ),
       
-      // TODO_ Show List
+      // ToDo Show List
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 15.0),
