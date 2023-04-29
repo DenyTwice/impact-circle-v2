@@ -10,20 +10,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  image_picker: ^0.8.4+4
-
   line_awesome_flutter: ^1.0.1
   flutter_screenutil: ^1.0.2
   animated_theme_switcher: ^1.0.5
-  
-  flutter_svg: ^0.22.0
-
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.4.2
   cloud_firestore: ^4.5.2
   firebase_core: ^2.10.0
   firebase_database: ^10.1.1
+
 
 dev_dependencies:
   flutter_test:
@@ -35,9 +30,11 @@ flutter:
 
   uses-material-design: true
 
-assets:
-  #   - images/a_dot_ham.jpeg
-
+  # To add assets to your application, add an assets section, like this:
+  assets:
+     - assets/images/bg.jpeg
+     - assets/images/logoo.png
+     - assets/images/bgc.png
   # fonts:
   #   - family: Schyler
   #     fonts:

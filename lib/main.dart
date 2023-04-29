@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/auth.dart';
-import 'pages/home.dart';
+import 'package:impact_circle/pages/community.dart';
+import 'pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -33,8 +34,7 @@ class Main extends StatelessWidget {
           return const Center(child: Text('Something went wrong try again!'));
         //* If Logged In
         } else if (snapshot.hasData) {
-          return const Home();
-        //* If Not Logged In
+          return const MyCommunity();
         } else {
           return const AuthPage();
         }

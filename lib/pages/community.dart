@@ -1,57 +1,106 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 
-class Community extends StatefulWidget {
-  const Community({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'add.dart';
+import 'profile.dart';
+
+class MyCommunity extends StatefulWidget {
+  const MyCommunity({Key? key}) : super(key: key);
 
   @override
-  State<Community> createState() => _CommunityState();
+  State<MyCommunity> createState() => _MyCommunityState();
 }
 
-class _CommunityState extends State<Community> {
-  
-  //* Adds listener method to initState()
-  @override
-  void initState() {
-    super.initState();
-    _activateListeners();
-  }
+class _MyCommunityState extends State<MyCommunity> {
+  int _selectedIndex = 0;
 
-  //* Checks onValue on path and sets displayText
-  // ToDo Append names of every community to list to make it accessible for UI 
-  void _activateListeners() {
-    database.child('/communities/"comm_id"/').onValue.listen((event) {
-      Map<String, dynamic> communityMap = // ?
-          jsonDecode(event.snapshot.value.toString());
-      setState(() {
-        displayText = communityMap['name'];
-      });
+  final List<Widget> _pages = [
+    // Add your pages here
+    const Home(),
+     AddCommunities(),
+     UserProfile(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
     });
   }
 
-  String displayText = 'Data';
-  final database = FirebaseDatabase.instance.ref(); //* Access to "root path" of database
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(child: Scaffold(
+      backgroundColor: const Color(0xFFE8D5C7),
+      appBar: AppBar(
+        toolbarHeight: 60,
+        backgroundColor: const Color(0xFFE8D5C7),
+        centerTitle: true,
+        title: const Text(
+          'COMMUNITY',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+          ),
+        
+        ),
+      ),
+      
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xFFE8D5C7),
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Add',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    ));
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      appBar: AppBar(
-        title: const Text('View Communities'),
-      ),
+    return  Scaffold(
       
-      // ToDo Show List
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 15.0),
-          child: Column(
-            children: [
-              Text(displayText),
-            ],
+      backgroundColor:  const Color(0xFFE8D5C7),
+      
+      body:Transform.translate(
+        offset:const Offset(0,20),
+      child:Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          width: 500,
+          height: 150,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(25.0),
+            border: Border.all(color: Colors.white,
+            )
           ),
+          
         ),
       ),
-    );
+     ) );
   }
 }
