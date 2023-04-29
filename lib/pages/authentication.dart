@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import './login.dart';
-import 'register.dart';
+import 'signup.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({ Key? key }) : super(key: key);
+class Authentication extends StatefulWidget {
+  const Authentication({ Key? key }) : super(key: key);
 
   @override
-  State<AuthPage> createState() => _AuthState();
+  State<Authentication> createState() => _AuthState();
 }
 
-class _AuthState extends State<AuthPage> {
+class _AuthState extends State<Authentication> {
   bool isLogin = true;
 
   //* Show Login or Register depending on onClickedSignUp's value

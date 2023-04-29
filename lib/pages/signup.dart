@@ -47,27 +47,26 @@ class _RegisterState extends State<Register> {
     //* Remove showDialog
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
     
-    writeToDatabase();
+    // writeToDatabase();
   }
 
   //* Adds user info to database
-  void writeToDatabase() async {
-    final user = database.child('/user_$_count/');
+  // void writeToDatabase() async {
+    // final user = database.child('/user_$_count/');
 
-    try {
-      await user.set({
-        'username': usernameController.text,
-        'email': emailController.text,
-        'avater_url': 'https://unsplash.com/photos/9Ozb6a3DTcI',
-        'requests_done': 0,
-        'communities': 'null'
-      });
-    } on Exception catch (e) {
-      print(e); //! ToDo Block sign up
-    }
+    // try {
+      // await user.set({
+    //     'username': usernameController.text,
+    //     'email': emailController.text,
+    //     'avater_url': 'https://unsplash.com/photos/9Ozb6a3DTcI',
+    //     'requests_done': 0,
+    //     'communities': 'null'
+    //   });
+    // } on Exception catch (e) {
+    //   print(e); //! ToDo Block sign up
+    // }
 
-    incrementCount(); // ToDo Change to last database entry += 1
-  }
+  // }
 
   @override
   Widget build(BuildContext context) {
