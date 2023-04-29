@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserProfile extends StatefulWidget {
+
   @override
   State<UserProfile> createState() => _UserProfileState();
 }

@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:impact_circle/pages/community.dart';
 
 class Login extends StatefulWidget {
+  //* Toggle between Login and Sign Up
   final VoidCallback onClickedSignUp;
 
   const Login({
@@ -19,10 +20,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Sign in method
+  //* Sign in with Firebase
   Future signIn() async {
     // ...existing code for signing in...
 
@@ -31,7 +33,6 @@ class _LoginState extends State<Login> {
       context,
       MaterialPageRoute(builder: (context) => const MyCommunity()),
     );
-
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -44,12 +45,18 @@ class _LoginState extends State<Login> {
         password: passwordController.text,
       );
     } on FirebaseException catch (e) {
-      print(e);
+      //TODO_ Show error to user
     }
 
+    //* Remove showDialog
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  //* Dispose controllers as well
+  // ?
   @override
   void dispose() {
     emailController.dispose();
@@ -122,9 +129,8 @@ class _LoginState extends State<Login> {
                   textAlign: TextAlign.center,
                 ),
 
+                //* Username Input Field
                 const SizedBox(height: 25),
-
-                // Username textfield
                 MyTextField(
                   controller: emailController,
                   hintText: 'username',

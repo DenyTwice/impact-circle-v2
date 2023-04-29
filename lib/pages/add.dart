@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 
 class AddCommunities extends StatefulWidget {
+
   @override
   State<AddCommunities> createState() => _AddCommunitiesState();
 }
@@ -57,6 +58,7 @@ class _AddCommunitiesState extends State<AddCommunities> {
                     ),
                   ],
                 ),
+
               // Name field
               const SizedBox(height: 20),
               Padding(
@@ -79,7 +81,6 @@ class _AddCommunitiesState extends State<AddCommunities> {
                       ),
                     )),
               ),
-
               // Description field
               const SizedBox(height: 20),
               Padding(
