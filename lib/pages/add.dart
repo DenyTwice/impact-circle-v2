@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/rendering.dart';
-import 'package:impact_circle/main.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class AddCommunities extends StatefulWidget {
+  const AddCommunities({Key? key}): super (key:key);
+
   @override
   State<AddCommunities> createState() => _AddCommunitiesState();
 }
@@ -38,7 +36,7 @@ class _AddCommunitiesState extends State<AddCommunities> {
             children: [
               const SizedBox(height: 50),
 
-                // Logo
+                //* Logo
                 Stack(
                   alignment: Alignment.center,
                   children: const [
@@ -57,7 +55,8 @@ class _AddCommunitiesState extends State<AddCommunities> {
                     ),
                   ],
                 ),
-              // Name field
+
+              //* Name field
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -80,7 +79,7 @@ class _AddCommunitiesState extends State<AddCommunities> {
                     )),
               ),
 
-              // Description field
+              //* Description field
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),

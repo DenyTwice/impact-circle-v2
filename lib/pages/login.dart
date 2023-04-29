@@ -6,7 +6,7 @@ import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
 
 class Login extends StatefulWidget {
-  // Toggle between Login and Sign Up
+  //* Toggle between Login and Sign Up
   final VoidCallback onClickedSignUp;
 
   const Login({
@@ -19,13 +19,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
-  // Sign in with Firebase
+  //* Sign in with Firebase
   Future signIn() async {
 
-    // Show loading overlay
+    //* Show loading overlay
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -41,10 +39,15 @@ class _LoginState extends State<Login> {
       //TODO_ Show error to user
     }
 
+    //* Remove showDialog
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  // Dispose controllers
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  //* Dispose controllers as well
+  // ?
   @override
   void dispose() {
     emailController.dispose();
@@ -63,7 +66,8 @@ class _LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo
+
+                //* Logo
                 const SizedBox(height: 50),
                 Stack(
                   alignment: Alignment.center,
@@ -84,7 +88,7 @@ class _LoginState extends State<Login> {
                   ],
                 ),
 
-                // Motto
+                //* Motto
                 const SizedBox(height: 50),
                 const Text(
                   'Take part in making society better',
@@ -94,7 +98,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
 
-                // Username Input Field
+                //* Username Input Field
                 const SizedBox(height: 25),
                 MyTextField(
                   controller: emailController,
@@ -104,7 +108,7 @@ class _LoginState extends State<Login> {
 
                 const SizedBox(height: 10),
 
-                // Password Input Field
+                //* Password Input Field
                 MyTextField(
                   controller: passwordController,
                   hintText: 'Password',
@@ -113,29 +117,15 @@ class _LoginState extends State<Login> {
 
                 const SizedBox(height: 10),
 
-                // TODO_ Forgot password?
-                // Ivin: Lmao I did not think about this
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.end,
-                //     children: const [
-                //       Text(
-                //         'Forgot Password?',
-                //         style: TextStyle(
-                //             color: Color.fromARGB(255, 255, 255, 255)),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                // ToDo Forgot password?
 
-                // Sign in button
+                //* Sign in button
                 const SizedBox(height: 25),
                 MyButton(
                   onTap: signIn,
                 ),
 
-                // Or
+                //* Or
                 const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -165,7 +155,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
 
-                // New user? Sign up now!
+                //* New user? Sign up now!
                 const SizedBox(height: 50),
                 const SizedBox(height: 24),
                 RichText(
@@ -176,7 +166,7 @@ class _LoginState extends State<Login> {
                         children: [
                       TextSpan(
                           recognizer: TapGestureRecognizer()
-                            ..onTap = widget.onClickedSignUp, // Toggle to Login Page
+                            ..onTap = widget.onClickedSignUp, //* Toggle to Login Page
                           text: 'Sign Up',
                           style: TextStyle(
                               decoration: TextDecoration.underline,

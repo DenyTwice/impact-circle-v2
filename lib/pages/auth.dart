@@ -12,7 +12,7 @@ class AuthPage extends StatefulWidget {
 class _AuthState extends State<AuthPage> {
   bool isLogin = true;
 
-  // Show Login or Register depending on onClickedSignUp's value
+  //* Show Login or Register depending on onClickedSignUp's value
   @override
   Widget build(BuildContext context) => isLogin 
     ? Login(onClickedSignUp: toggle) 
