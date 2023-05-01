@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:math';
 
 class AddCommunities extends StatefulWidget {
   const AddCommunities({Key? key}) : super(key: key);
@@ -10,11 +12,58 @@ class AddCommunities extends StatefulWidget {
 }
 
 class _AddCommunitiesState extends State<AddCommunities> {
+  final database = FirebaseDatabase.instance.ref();
+
+  //* Try to save to Realtime Database
+  void saveToDatabase(String nodeID) async{
+    try {
+      await database.child('/communities/$nodeID')
+            .set({'name' : commnameController.text, 
+                  'description': commdescController.text});
+                  //! Add users: {users who joined this community}
+                  //: Add profile picture URL
+      print("yes");
+    } catch (e) {
+      print(e); //! Show to user and cancel save
+    }
+  }
+
+  //* Performs three parts: 
+  //* Generating random ID for node, checking if ID is already used and finally
+  //* Saving it to database.
+  void intiateSave() {
+      String nodeID = generateRandomString(8);
+    do {
+      nodeID = generateRandomString(8);
+    } while (checkIfNodeExists('/communities/$nodeID'));
+
+    saveToDatabase(nodeID);
+  }
+
+  //* Generate random ID from characters from $chars
+  String generateRandomString(int len) {
+    var r = Random();
+    const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
+  }
+ 
+  //* Check if ID is already used
+  bool checkIfNodeExists(String node) {
+    bool nodeExists = false;
+
+    database.child('/communities/$node').onValue.listen((DatabaseEvent event) {
+      if (event.snapshot.value != null) {
+        nodeExists = true;
+      }
+    });
+
+    return nodeExists;
+  }
+
   final commnameController = TextEditingController();
   final commdescController = TextEditingController();
 
   File? _imageFile;
-
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
     if (pickedFile != null) {
@@ -33,6 +82,7 @@ class _AddCommunitiesState extends State<AddCommunities> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              
               //* Logo
               const SizedBox(height: 50),
               Stack(
@@ -78,7 +128,7 @@ class _AddCommunitiesState extends State<AddCommunities> {
               ),
 
               //* Description field
-              // ToDo Make this taller
+              //: Make this taller
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -109,6 +159,11 @@ class _AddCommunitiesState extends State<AddCommunities> {
                 child: const Text('Select Image'),
               ),
               if (_imageFile != null) Image.file(_imageFile!),
+
+              ElevatedButton(
+                onPressed: intiateSave,
+                child: const Text('Save'),
+              ),
             ],
           ),
         ),

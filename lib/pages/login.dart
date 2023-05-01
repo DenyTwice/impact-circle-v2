@@ -4,7 +4,7 @@ import 'package:impact_circle/components/my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
-import 'package:impact_circle/pages/communities.dart';
+import 'package:impact_circle/pages/nav.dart';
 
 class Login extends StatefulWidget {
   //* Toggle between Login and Sign Up
@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Communities()),
+      MaterialPageRoute(builder: (context) => const Nav()),
     );
     showDialog(
       context: context,

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'addCommunities.dart';
+import 'add_communities.dart';
 import 'profile.dart';
 import 'home.dart';
 
-class Communities extends StatefulWidget {
-  const Communities({Key? key}) : super(key: key);
+class Nav extends StatefulWidget {
+  const Nav({Key? key}) : super(key: key);
 
   @override
-  State<Communities> createState() => _CommunitiesState();
+  State<Nav> createState() => _NavState();
 }
 
-class _CommunitiesState extends State<Communities> {
+class _NavState extends State<Nav> {
   //* Navigation bar:
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     const Home(),
     const AddCommunities(),
-    UserProfile(),
+    const UserProfile(),
   ];
 
   void _onItemTapped(int index) {
@@ -31,6 +31,7 @@ class _CommunitiesState extends State<Communities> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFFE8D5C7),
+        
         appBar: AppBar(
           toolbarHeight: 60,
           backgroundColor: const Color(0xFFE8D5C7),
@@ -45,7 +46,9 @@ class _CommunitiesState extends State<Communities> {
             ),
           ),
         ),
+        
         body: _pages[_selectedIndex],
+        
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: const Color(0xFFE8D5C7),
           currentIndex: _selectedIndex,
