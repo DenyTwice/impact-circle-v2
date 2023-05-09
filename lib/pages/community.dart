@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'add.dart';
-import 'profile.dart';
+
 
 class MyCommunity extends StatefulWidget {
   const MyCommunity({Key? key}) : super(key: key);
@@ -10,96 +9,202 @@ class MyCommunity extends StatefulWidget {
 }
 
 class _MyCommunityState extends State<MyCommunity> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _pages = [
-    // Add your pages here
-    const Home(),
-     AddCommunities(),
-     UserProfile(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
-      backgroundColor: const Color(0xFFE8D5C7),
+    return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 60,
-        backgroundColor: const Color(0xFFE8D5C7),
+        actions: [
+          IconButton(
+              onPressed: () {
+
+              },
+              icon: const Icon(
+                Icons.search,
+              ))
+        ],
+        elevation: 0,
         centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text(
-          'COMMUNITY',
+          "Community",
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 30,
-          ),
-        
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
         ),
       ),
-      
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFFE8D5C7),
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      drawer: Drawer(
+          child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 50),
+        children: <Widget>[
+          Icon(
+            Icons.account_circle,
+            size: 150,
+            color: Colors.grey[700],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Add',
+          const SizedBox(
+            height: 15,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+          // Text(
+          //   userName,
+          //   textAlign: TextAlign.center,
+          //   style: const TextStyle(fontWeight: FontWeight.bold),
+          // ),
+          const SizedBox(
+            height: 30,
           ),
+          const Divider(
+            height: 2,
+          ),
+          ListTile(
+            onTap: () {},
+            selectedColor: Theme.of(context).primaryColor,
+            selected: true,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            leading: const Icon(Icons.group),
+            title: const Text(
+              "Community",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          const ListTile(
+            // onTap: () {
+            //   nextScreenReplace(
+            //       context,
+            //       ProfilePage(
+            //         userName: userName,
+            //         email: email,
+            //       ));
+            // },
+            contentPadding:
+                 EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            leading:  Icon(Icons.group),
+            title:  Text(
+              "Profile",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          ListTile(
+            onTap: () async {
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Logout"),
+                      content: const Text("Are you sure you want to logout?"),
+                      actions: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.cancel,
+                            color: Colors.red,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                          
+                            // Navigator.of(context).pushAndRemoveUntil(
+                            //     MaterialPageRoute(
+                            //         builder: (context) => const Login()),
+                            //     (route) => false);
+                          },
+                          icon: const Icon(
+                            Icons.done,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    );
+                  });
+            },
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            leading: const Icon(Icons.exit_to_app),
+            title: const Text(
+              "Logout",
+              style: TextStyle(color: Colors.black),
+            ),
+          )
         ],
-      ),
-    ));
-  }
-}
+      )),
+      body: groupList(),
+floatingActionButton: FloatingActionButton(
+  onPressed: () {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AddGroupDialog();
+      },
+    );
+  },
+  elevation: 0,
+  backgroundColor: Theme.of(context).primaryColor,
+  child: const Icon(
+    Icons.add,
+    color: Colors.white,
+    size: 30,
+  ),
+),
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+    );
+  }
+
+
+  groupList(){}
+
+
+  }
+class AddGroupDialog extends StatefulWidget {
+  const AddGroupDialog({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  _AddGroupDialogState createState() => _AddGroupDialogState();
 }
 
-class _HomeState extends State<Home> {
-
-
+class _AddGroupDialogState extends State<AddGroupDialog> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      
-      backgroundColor:  const Color(0xFFE8D5C7),
-      
-      body:Transform.translate(
-        offset:const Offset(0,20),
-      child:Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          width: 500,
-          height: 150,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(25.0),
-            border: Border.all(color: Colors.white,
-            )
-          ),
-          
+    return Dialog(
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Add a New Community",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: "Community Name",
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: "Community Description",
+              ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                // Implement your logic to add the new group
+                Navigator.pop(context);
+              },
+              child: const Text("Add Community"),
+            ),
+          ],
         ),
       ),
-     ) );
+    );
   }
 }
