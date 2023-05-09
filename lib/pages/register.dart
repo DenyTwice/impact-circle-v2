@@ -4,6 +4,8 @@ import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:impact_circle/components/my_textfield.dart';
 
+import '../components/my_button.dart';
+
 class Register extends StatefulWidget {
   final VoidCallback onClickedSignUp;
 
@@ -40,137 +42,111 @@ class _RegisterState extends State<Register> {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            body: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/bg.jpeg',
-                    ), // Replace with your background image path
-                    fit: BoxFit.cover,
+ @override
+Widget build(BuildContext context) {
+  return SafeArea(
+    child: Scaffold(
+      body: SingleChildScrollView(
+        child: Transform.translate(
+          offset: const Offset(0, 30),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              children: [
+                const Text(
+                  "Impact Circle.",
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                child: Transform.translate(
-                    offset: const Offset(0, 30),
-                    child: Padding(
-                        padding: const EdgeInsets.all(30.0),
-                        child: Column(children: [
-                          // SizedBox(
-                          //   height: 100,
-                          //   width: double.infinity,
-                          //   child: Image.asset(
-                          //     'assets/images/logoo.png', // Replace with your logo image path
-                          //     width: 100,
-                          //     height: 100,
-                          //   ),
-                          // ),
-                          const SizedBox(
-                            height: 265,
-                          ),
-                          Container(
-                              width: 500,
-                              height: 400,
-                              decoration: BoxDecoration(
-                                  color: const Color.fromARGB(0, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  border: Border.all(
-                                    color: Colors.white,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 1,
-                                      blurRadius: 20,
-                                    )
-                                  ]),
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                        height:
-                                            20), // add some space to move the text down
-                                    const Text(
-                                      'REGISTER',
-                                      style: TextStyle(
-                                        fontSize: 40,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
+                  const Text(
+                            "Create your account now to volunteer...",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w400)),
+                  SizedBox(
+                    child: Image.asset(
+                      'assets/images/register.png',
+                    ),
+                  ),
 
-                                    const SizedBox(height: 20),
-
-                                    // Username textfield
-                                    MyTextField(
-                                      controller: usernameController,
-                                      hintText: 'username',
-                                      obscureText: false,
-                                    ),
-                                    const SizedBox(height: 20),
-                                    MyTextField(
-                                      controller: emailController,
-                                      hintText: 'email',
-                                      obscureText: false,
-                                    ),
-                                    const SizedBox(height: 20),
-                                    MyTextField(
-                                      controller: passwordController,
-                                      hintText: 'password',
-                                      obscureText: true,
-                                    ),
-                                    const SizedBox(height: 20),
-                                    SizedBox(
-                                      height: 60,
-                                      width: 100,
-                                      child: ElevatedButton(
-                                        onPressed: signUp,
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30.0),
-                                            ),
-                                          ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.grey.shade200),
-                                        ),
-                                        child: const Text(
-                                          'Sign Up',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    RichText(
-                                        text: TextSpan(
-                                            recognizer: TapGestureRecognizer(),
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16),
-                                            text: 'Already a User?  ',
-                                            children: [
-                                          TextSpan(
-                                              text: 'Login',
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap =
-                                                    widget.onClickedSignUp,
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary))
-                                        ]))
-                                  ]))
-                        ]))))));
-  }
+                  const Text(
+                    'REGISTER',
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                // Username textfield
+                MyTextField(
+                  controller: usernameController,
+                  hintText: 'Username',
+                  obscureText: false,
+                   prefixIcon: const Icon(
+                    Icons.person,
+                     color: Color.fromARGB(255, 219, 79, 24)
+                   )
+                ),
+                const SizedBox(height: 20),
+                MyTextField(
+                  controller: emailController,
+                  hintText: 'Email',
+                  obscureText: false,
+                  prefixIcon: const Icon(
+                    Icons.email,
+                    color: Color.fromARGB(255, 219, 79, 24)
+                  ),
+                ),
+                const SizedBox(height: 20),
+                MyTextField(
+                  controller: passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                     color: Color.fromARGB(255, 219, 79, 24)
+                  ),
+                ),
+                   const SizedBox(height: 25),
+                  // Sign in button
+                  MyButton(
+                    onTap: signUp,
+                  ),
+                const SizedBox(height: 20),
+                RichText(
+                  text: TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = widget.onClickedSignUp,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                    text: 'Already a User?  ',
+                    children: [
+                      TextSpan(
+                        text: 'Sign Up',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = widget.onClickedSignUp,
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }
+
 
 
 //   @override
@@ -315,3 +291,4 @@ class _RegisterState extends State<Register> {
 //     );
 //   }
 // }
+}

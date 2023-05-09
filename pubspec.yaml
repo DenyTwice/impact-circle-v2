@@ -37,6 +37,8 @@ flutter:
      - assets/images/bg.jpeg
      - assets/images/logoo.png
      - assets/images/bgc.png
+     - assets/images/login.png
+     - assets/images/register.png
   # fonts:
   #   - family: Schyler
   #     fonts:
