@@ -1,38 +1,43 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      
-      backgroundColor:  const Color(0xFFE8D5C7),
-      body:Transform.translate(
-        offset:const Offset(0,20),
-      child:Padding(
-        padding: const EdgeInsets.all(10.0),
+    
+    final user = FirebaseAuth.instance.currentUser!;
 
-        //* Card
-        // ToDo Should probably define a class for a card so that we can dynamically add more
-        child: Container(
-          width: 500,
-          height: 150,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(25.0),
-            border: Border.all(color: Colors.white,
-            )
-          ),
+    return Scaffold(
+      
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
+      
+      body: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           
+          children: [  
+            const Text(
+              'Signed in as:',
+              style: TextStyle(fontSize: 16),
+            ),
+            
+            const SizedBox(height: 8),
+            Text(
+              user.email!,
+              style: const TextStyle(fontSize: 20),
+            ),
+            
+
+          ],
+
         ),
       ),
-     ) );
+    );
   }
 }

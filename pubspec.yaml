@@ -10,15 +10,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^0.8.4+4
+
   line_awesome_flutter: ^1.0.1
   flutter_screenutil: ^1.0.2
   animated_theme_switcher: ^1.0.5
+
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.4.2
   cloud_firestore: ^4.5.2
   firebase_core: ^2.10.0
-  firebase_database: ^10.1.1
-  image_picker: ^0.8.7+4
 
 
 dev_dependencies:
@@ -36,6 +37,8 @@ flutter:
      - assets/images/bg.jpeg
      - assets/images/logoo.png
      - assets/images/bgc.png
+     - assets/images/login.png
+     - assets/images/register.png
   # fonts:
   #   - family: Schyler
   #     fonts:

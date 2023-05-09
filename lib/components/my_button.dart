@@ -13,9 +13,9 @@ class MyButton extends StatelessWidget {
         height: 60,
         child: Container(
           padding: const EdgeInsets.all(20),
-          margin: const EdgeInsets.symmetric(horizontal: 80),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 255, 254, 254),
+            color: const Color.fromARGB(255, 219, 79, 24),
             borderRadius: BorderRadius.circular(50),
           ),
           child: const Center(
@@ -23,7 +23,7 @@ class MyButton extends StatelessWidget {
             child: Text(
               "LOGIN",
               style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
