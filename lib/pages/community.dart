@@ -4,15 +4,13 @@ import 'package:impact_circle/pages/profilepage.dart';
 
 class MyCommunity extends StatefulWidget {
   const MyCommunity({Key? key}) : super(key: key);
+  
 
   @override
   State<MyCommunity> createState() => _MyCommunityState();
 }
 
 class _MyCommunityState extends State<MyCommunity> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +18,9 @@ class _MyCommunityState extends State<MyCommunity> {
         backgroundColor: const Color.fromARGB(255, 219, 79, 24),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () => _dialogBuilder(context),
               icon: const Icon(
-                Icons.search,
+                Icons.account_circle,
               ))
         ],
         elevation: 0,
@@ -33,43 +31,43 @@ class _MyCommunityState extends State<MyCommunity> {
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
         ),
       ),
-
       body: Align(
         alignment: Alignment.topCenter,
-  child: Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.3),
-          blurRadius: 5,
-          offset: const Offset(0, 3),
-        )
-      ]
-    ),
-    
-    height: 200,
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20)
-      ),
-      margin: const EdgeInsets.all(10),
-      child: const ListTile(
-      
-        title:  Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Text("Cleaning",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),textAlign: TextAlign.left,),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
+                )
+              ]),
+          height: 200,
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            margin: const EdgeInsets.all(10),
+            child: const ListTile(
+              title: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  "Cleaning",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              subtitle: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  "Tap to see all the cleaning events happening",
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ),
+          ),
         ),
-        subtitle:  Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Text("Tap to see all the cleaning events happening",textAlign: TextAlign.left,),
-        ),
       ),
-    ),
-  ),
-),
-
-      
       drawer: Drawer(
           child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 50),
@@ -111,14 +109,7 @@ class _MyCommunityState extends State<MyCommunity> {
             ),
           ),
           ListTile(
-            onTap: () {
-              nextScreenReplace(
-                  context,
-                  ProfilePage(
-                    userName: "userName",
-                    email: "email",
-                  ));
-            },
+            onTap: () => _dialogBuilder(context),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             leading: const Icon(Icons.group),
@@ -127,30 +118,26 @@ class _MyCommunityState extends State<MyCommunity> {
               style: TextStyle(color: Colors.black),
             ),
           ),
-GestureDetector(
-  onTap: () async {
-    await FirebaseAuth.instance.signOut();
-    // Navigator.pushAndRemoveUntil(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => Login(onClickedSignUp: () {  },)),
-    //   (route) => false,
-    // );
-  },
-  child: const ListTile(
-    contentPadding:
-         EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-    leading:  Icon(Icons.exit_to_app),
-    title:  Text(
-      "Logout",
-      style: TextStyle(color: Colors.black),
-    ),
-  ),
-)
-
+          GestureDetector(
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => Login(onClickedSignUp: () {  },)),
+              //   (route) => false,
+              // );
+            },
+            child: const ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              leading: Icon(Icons.exit_to_app),
+              title: Text(
+                "Logout",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          )
         ],
       )),
-      
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
@@ -170,10 +157,9 @@ GestureDetector(
       ),
     );
   }
-    
-  }
+}
 
-  groupList() {}
+groupList() {}
 
 class AddGroupDialog extends StatefulWidget {
   const AddGroupDialog({Key? key}) : super(key: key);
@@ -191,13 +177,11 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
         child: Container(
           padding: const EdgeInsets.all(16),
           child: Column(
-      
             children: [
               const Center(
-                child:  Text(
+                child: Text(
                   "Add a New Community",
                   style: TextStyle(
-                      
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -238,3 +222,39 @@ void nextScreenReplace(context, page) {
   Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context) => page));
 }
+
+ Future<void> _dialogBuilder(BuildContext context) {
+  final user = FirebaseAuth.instance.currentUser!;
+  final email = user.email;
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('$email'),
+          content: const Text('A dialog is a type of modal window that\n'
+              'appears in front of app content to\n'
+              'provide critical information, or prompt\n'
+              'for a decision to be made.'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Disable'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Enable'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );}
