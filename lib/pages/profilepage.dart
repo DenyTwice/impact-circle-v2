@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/login.dart';
 
+import 'community.dart';
+
 class ProfilePage extends StatefulWidget {
   String userName;
   String email;
@@ -17,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: const Color.fromARGB(255, 219, 79, 24),
         elevation: 0,
         title: const Text(
           "Profile",
@@ -50,20 +52,25 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           ListTile(
             onTap: () {
-              // move to community page
+                  Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MyCommunity()),
+    );
             },
+            selectedColor: const Color.fromARGB(255, 219, 79, 24),
+            selected: true,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             leading: const Icon(Icons.group),
             title: const Text(
-              "Groups",
+              "Community",
               style: TextStyle(color: Colors.black),
             ),
           ),
           ListTile(
             onTap: () {},
             selected: true,
-            selectedColor: Theme.of(context).primaryColor,
+            selectedColor: const Color.fromARGB(255, 219, 79, 24),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             leading: const Icon(Icons.group),

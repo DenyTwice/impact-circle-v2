@@ -20,6 +20,8 @@ dependencies:
   firebase_auth: ^4.4.2
   cloud_firestore: ^4.5.2
   firebase_core: ^2.10.0
+ 
+
 
 
 dev_dependencies:
@@ -39,6 +41,7 @@ flutter:
      - assets/images/bgc.png
      - assets/images/login.png
      - assets/images/register.png
+
   # fonts:
   #   - family: Schyler
   #     fonts:
