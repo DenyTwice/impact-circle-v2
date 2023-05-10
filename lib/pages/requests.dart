@@ -102,7 +102,9 @@ class MyStatelessWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      
                       Text(
+                        
                         data['title'] ?? '',
                         style: TextStyle(
                           fontSize: 18,
