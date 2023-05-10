@@ -4,6 +4,7 @@ import 'package:impact_circle/components/my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
+import 'package:impact_circle/pages/community.dart';
 
 class Login extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -23,6 +24,13 @@ class _LoginState extends State<Login> {
 
   // Sign in method
   Future signIn() async {
+    // ...existing code for signing in...
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MyCommunity()),
+    );
 
     showDialog(
       context: context,
@@ -36,7 +44,7 @@ class _LoginState extends State<Login> {
         password: passwordController.text,
       );
     } on FirebaseException catch (e) {
-      print("Firebase sign in error: $e");
+      print(e);
     }
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -96,6 +104,7 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 25),
                   // Sign in button
                   MyButton(
+                    text: 'Login',
                     onTap: signIn,
                   ),
                   const SizedBox(height: 20),
