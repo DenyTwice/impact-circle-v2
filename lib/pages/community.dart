@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/profilepage.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:math';
 
 class MyCommunity extends StatefulWidget {
   const MyCommunity({Key? key}) : super(key: key);
-  
 
   @override
   State<MyCommunity> createState() => _MyCommunityState();
@@ -169,6 +170,55 @@ class AddGroupDialog extends StatefulWidget {
 }
 
 class _AddGroupDialogState extends State<AddGroupDialog> {
+  final database = FirebaseDatabase.instance.ref();
+
+  // Try to save to Realtime Database
+  void saveToDatabase(String nodeID) async {
+    try {
+      await database.child('/communities/$nodeID').set({
+        'name': commNameController.text,
+        'description': commDescController.text
+      });
+    } catch (e) {
+      print(e); //! Show to user and cancel save
+    }
+  }
+
+  // Performs three parts:
+  // Generating random ID for node, checking if ID is already used and finally
+  // Saving it to database.
+  void intiateSave() {
+    String nodeID = generateRandomString(8);
+    do {
+      nodeID = generateRandomString(8);
+    } while (checkIfNodeExists('/communities/$nodeID'));
+
+    saveToDatabase(nodeID);
+  }
+
+  // Generate random ID from characters from $chars
+  String generateRandomString(int len) {
+    var r = Random();
+    const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
+  }
+
+  // Check if ID is already used
+  bool checkIfNodeExists(String node) {
+    bool nodeExists = false;
+
+    database.child('/communities/$node').onValue.listen((DatabaseEvent event) {
+      if (event.snapshot.value != null) {
+        nodeExists = true;
+      }
+    });
+
+    return nodeExists;
+  }
+
+  final commNameController = TextEditingController();
+  final commDescController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -189,12 +239,14 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: commNameController,
                 decoration: const InputDecoration(
                   labelText: "Community Name",
                 ),
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: commDescController,
                 decoration: const InputDecoration(
                   labelText: "Community Description",
                 ),
@@ -202,6 +254,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  intiateSave();
                   Navigator.pop(context);
                 },
                 style: ButtonStyle(
@@ -223,38 +276,39 @@ void nextScreenReplace(context, page) {
       context, MaterialPageRoute(builder: (context) => page));
 }
 
- Future<void> _dialogBuilder(BuildContext context) {
+Future<void> _dialogBuilder(BuildContext context) {
   final user = FirebaseAuth.instance.currentUser!;
   final email = user.email;
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('$email'),
-          content: const Text('A dialog is a type of modal window that\n'
-              'appears in front of app content to\n'
-              'provide critical information, or prompt\n'
-              'for a decision to be made.'),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Disable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('$email'),
+        content: const Text('A dialog is a type of modal window that\n'
+            'appears in front of app content to\n'
+            'provide critical information, or prompt\n'
+            'for a decision to be made.'),
+        actions: <Widget>[
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Enable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            child: const Text('Disable'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-          ],
-        );
-      },
-    );}
+            child: const Text('Enable'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}

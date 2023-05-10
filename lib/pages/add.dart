@@ -1,17 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/rendering.dart';
-import 'package:impact_circle/main.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'dart:math';
+import 'package:firebase_database/firebase_database.dart';
 
 class AddCommunities extends StatefulWidget {
+
   @override
   State<AddCommunities> createState() => _AddCommunitiesState();
 }
 
-class _AddCommunitiesState extends State<AddCommunities> {
+class _AddCommunitiesState extends State<AddCommunities> { 
   final commnameController = TextEditingController();
   final commdescController = TextEditingController();
   File? _imageFile;  

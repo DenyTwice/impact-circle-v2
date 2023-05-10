@@ -22,13 +22,17 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  // Sign up function
   Future signUp() async {
+
+    // Show circular loading indicator
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
+    // Try sign in
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
@@ -38,6 +42,7 @@ class _RegisterState extends State<Register> {
       print(e);
     }
 
+    // Remove circular loading indicator
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
@@ -52,6 +57,7 @@ class _RegisterState extends State<Register> {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
+                  
                   const Text(
                     "Impact Circle.",
                     style: TextStyle(
@@ -59,9 +65,12 @@ class _RegisterState extends State<Register> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  
                   const Text("Join us!",
                       style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400)
+                      ),
+                  
                   SizedBox(
                     child: Image.asset(
                       'assets/images/register.png',
@@ -75,6 +84,8 @@ class _RegisterState extends State<Register> {
                       obscureText: false,
                       prefixIcon: const Icon(Icons.person,
                           color: Color.fromARGB(255, 219, 79, 24))),
+                  
+                  // Email textfield
                   const SizedBox(height: 20),
                   MyTextField(
                     controller: emailController,
@@ -83,6 +94,8 @@ class _RegisterState extends State<Register> {
                     prefixIcon: const Icon(Icons.email,
                         color: Color.fromARGB(255, 219, 79, 24)),
                   ),
+
+                  // Password textfield
                   const SizedBox(height: 20),
                   MyTextField(
                     controller: passwordController,
@@ -92,11 +105,14 @@ class _RegisterState extends State<Register> {
                         color: Color.fromARGB(255, 219, 79, 24)),
                   ),
                   const SizedBox(height: 25),
-                  // Sign in button
+                  
+                  // Sign up button
                   MyButton(
                     onTap: signUp,
                   ),
                   const SizedBox(height: 20),
+                  
+                  // Text to swap to Login page
                   RichText(
                     text: TextSpan(
                       recognizer: TapGestureRecognizer()
