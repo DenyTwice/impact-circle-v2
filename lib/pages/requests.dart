@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:impact_circle/pages/community.dart';
+import 'package:impact_circle/pages/community_page.dart';
 import 'package:impact_circle/pages/profilepage.dart';
 
 class Requests {

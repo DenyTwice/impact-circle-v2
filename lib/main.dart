@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:impact_circle/pages/auth.dart';
-import 'package:impact_circle/pages/community.dart';
-import 'pages/login.dart';
+import 'package:impact_circle/pages/auth_page.dart';
+import 'package:impact_circle/pages/community_page.dart';
+import 'pages/login_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

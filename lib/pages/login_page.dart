@@ -4,7 +4,7 @@ import 'package:impact_circle/components/my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
-import 'package:impact_circle/pages/community.dart';
+import 'package:impact_circle/pages/community_page.dart';
 
 class Login extends StatefulWidget {
   final VoidCallback onClickedSignUp;
