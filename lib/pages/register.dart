@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:impact_circle/components/my_textfield.dart';
-
 import '../components/my_button.dart';
 
 class Register extends StatefulWidget {
