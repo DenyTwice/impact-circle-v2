@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:impact_circle/components/my_button.dart';
-import 'package:impact_circle/components/my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
+import 'package:impact_circle/components/my_textfield.dart';
+import '../components/my_button.dart';
 
-class Login extends StatefulWidget {
+class Register extends StatefulWidget {
   final VoidCallback onClickedSignUp;
 
-  const Login({
+  const Register({
     Key? key,
     required this.onClickedSignUp,
   }) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
+  final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Sign in method
-  Future signIn() async {
-
+  Future signUp() async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -31,12 +30,12 @@ class _LoginState extends State<Login> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
     } on FirebaseException catch (e) {
-      print("Firebase sign in error: $e");
+      print(e);
     }
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -54,38 +53,37 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   const Text(
-                    "Impact Cirlce.",
+                    "Impact Circle.",
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Welcome back!",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+                  const Text("Join us!",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
                   SizedBox(
                     child: Image.asset(
-                      'assets/images/login.png',
+                      'assets/images/register.png',
                     ),
                   ),
 
-                  
                   // Username textfield
                   MyTextField(
-                      controller: emailController,
-                      hintText: 'Email',
+                      controller: usernameController,
+                      hintText: 'Username',
                       obscureText: false,
-                      prefixIcon:const  Icon(
-                        Icons.email,
-                        color: Color.fromARGB(255, 219, 79, 24)
-                      )),
-
-                  const SizedBox(height: 25),
+                      prefixIcon: const Icon(Icons.person,
+                          color: Color.fromARGB(255, 219, 79, 24))),
+                  const SizedBox(height: 20),
+                  MyTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    obscureText: false,
+                    prefixIcon: const Icon(Icons.email,
+                        color: Color.fromARGB(255, 219, 79, 24)),
+                  ),
+                  const SizedBox(height: 20),
                   MyTextField(
                     controller: passwordController,
                     hintText: 'Password',
@@ -96,30 +94,31 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 25),
                   // Sign in button
                   MyButton(
-                    onTap: signIn,
+                    onTap: signUp,
                   ),
                   const SizedBox(height: 20),
-                  // or continue with
-                  const SizedBox(height: 10),
                   RichText(
                     text: TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = widget.onClickedSignUp,
                       style: const TextStyle(
-                          color: Color.fromARGB(255, 219, 79, 24),
-                          fontSize: 16),
-                      text: "Don't have an account? ",
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                      text: 'Already have an account? ',
                       children: [
                         TextSpan(
+                          text: 'Log in here.',
                           recognizer: TapGestureRecognizer()
                             ..onTap = widget.onClickedSignUp,
-                          text: 'Register here',
-                          style: const TextStyle(
+                          style: TextStyle(
                             decoration: TextDecoration.underline,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
-                        ),
+                        )
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

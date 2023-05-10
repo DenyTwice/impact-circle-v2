@@ -1,49 +1,42 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final controller;
   final String hintText;
   final bool obscureText;
-
+   final Widget? prefixIcon;
   const MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
+    this.prefixIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: SizedBox(
-        height: 45,
+        height: 40,
         child: TextField(
           textAlign: TextAlign.center,
           controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
+            hintText: hintText,
+              prefixIcon: prefixIcon,
             
-              enabledBorder: OutlineInputBorder(
-                
-                borderSide: const BorderSide(color: Colors.white),
-                borderRadius: BorderRadius.circular(15.0),
-                
-                
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-                 borderRadius: BorderRadius.circular(10.0),
-                
-              ),
-              fillColor: Colors.grey.shade200,
-              filled: true,
-              
-              hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey[500])),
-              
-        ),
-      ),
-    );
+  labelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
+  focusedBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 1),
+  ),
+  enabledBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 1),
+  ),
+  errorBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 1),
+  ),
+))));
   }
 }
