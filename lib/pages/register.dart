@@ -25,7 +25,6 @@ class _RegisterState extends State<Register> {
 
   // Sign up function
   Future signUp() async {
-
     // Show circular loading indicator
     showDialog(
       context: context,
@@ -46,107 +45,99 @@ class _RegisterState extends State<Register> {
     // Remove circular loading indicator
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: Transform.translate(
-            offset: const Offset(0, 30),
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                children: [
-                  
-                  const Text(
-                    "Impact Circle.",
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  
-                  const Text("Join us!",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400)
+              offset: const Offset(0, 30),
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Impact Circle.",
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
                       ),
-                  SizedBox(
-                    child: Image.asset(
-                      'assets/images/register.png',
                     ),
-                  ),
 
-                  // Username textfield
-                  MyTextField(
-                      controller: usernameController,
-                      hintText: 'Username',
+                    const Text("Join us!",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w400)),
+                    SizedBox(
+                      child: Image.asset(
+                        'assets/images/register.png',
+                      ),
+                    ),
+
+                    // Username textfield
+                    MyTextField(
+                        controller: usernameController,
+                        hintText: 'Username',
+                        obscureText: false,
+                        prefixIcon: const Icon(Icons.person,
+                            color: Color.fromARGB(255, 219, 79, 24))),
+
+                    // Email textfield
+                    const SizedBox(height: 20),
+                    MyTextField(
+                      controller: emailController,
+                      hintText: 'Email',
                       obscureText: false,
-                      prefixIcon: const Icon(Icons.person,
-                          color: Color.fromARGB(255, 219, 79, 24))),
-                  
-                  // Email textfield
-                  const SizedBox(height: 20),
-                  MyTextField(
-                    controller: emailController,
-                    hintText: 'Email',
-                    obscureText: false,
-                    prefixIcon: const Icon(Icons.email,
-                        color: Color.fromARGB(255, 219, 79, 24)),
-                  ),
+                      prefixIcon: const Icon(Icons.email,
+                          color: Color.fromARGB(255, 219, 79, 24)),
+                    ),
 
-                  // Password textfield
-                  const SizedBox(height: 20),
-                  MyTextField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    obscureText: true,
-                    prefixIcon: const Icon(Icons.lock,
-                        color: Color.fromARGB(255, 219, 79, 24)),
-                  ),
-                  const SizedBox(height: 25),
-                  
-                  // Sign up button
-                  MyButton(
-                    text: 'Register',
-                    onTap: signUp,
-                    
-                  ),
-                  const SizedBox(height: 20),
-                  
-                  // Text to swap to Login page
-                  RichText(
-                    text: TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignUp,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                      text: 'Already have an account? ',
-                      children: [
-                        TextSpan(
-                          text: 'Log in here.',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = widget.onClickedSignUp,
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        )
-                      ],
+                    // Password textfield
+                    const SizedBox(height: 20),
+                    MyTextField(
+                      controller: passwordController,
+                      hintText: 'Password',
+                      obscureText: true,
+                      prefixIcon: const Icon(Icons.lock,
+                          color: Color.fromARGB(255, 219, 79, 24)),
+                    ),
+                    const SizedBox(height: 25),
+
+                    // Sign up button
+                    MyButton(
+                      text: 'Register',
+                      onTap: signUp,
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Text to swap to Login page
+                    RichText(
+                      text: TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = widget.onClickedSignUp,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
                         ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+                        text: 'Already have an account? ',
+                        children: [
+                          TextSpan(
+                            text: 'Log in here.',
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.onClickedSignUp,
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }
