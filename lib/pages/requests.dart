@@ -75,39 +75,55 @@ class Requests extends StatelessWidget {
 class MyStatelessWidget extends StatelessWidget {
   
 
-  final List<String> cardsData = ['Card 1', 'Card 2', 'Card 3', 'Card 4'];
-
+  final List<Map<String, String>> cardsData = [
+  {'title': 'Card 1', 'description': 'Description for card 1'},
+  {'title': 'Card 2', 'description': 'Description for card 2'},
+  {'title': 'Card 3', 'description': 'Description for card 3'},
+  {'title': 'Card 4', 'description': 'Description for card 4'},
+];
   @override
   Widget build(BuildContext context) {
-    
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          
           children: cardsData.map((data) {
             return Container(
               width: double.infinity,
               height: 200,
               child: Card(
-                
                 shape: RoundedRectangleBorder(
-                
                   borderRadius: BorderRadius.circular(10),
                 ),
                 elevation: 5,
-                
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text(data),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data['title'] ?? '',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        data['description'] ?? '',
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
           }).toList(),
-          
         ),
       ),
-      
     );
   }
 }
