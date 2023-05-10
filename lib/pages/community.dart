@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/profilepage.dart';
 
-import 'login.dart';
-
 class MyCommunity extends StatefulWidget {
   const MyCommunity({Key? key}) : super(key: key);
 
@@ -132,11 +130,11 @@ class _MyCommunityState extends State<MyCommunity> {
 GestureDetector(
   onTap: () async {
     await FirebaseAuth.instance.signOut();
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => Login(onClickedSignUp: () {  },)),
-      (route) => false,
-    );
+    // Navigator.pushAndRemoveUntil(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => Login(onClickedSignUp: () {  },)),
+    //   (route) => false,
+    // );
   },
   child: const ListTile(
     contentPadding:
