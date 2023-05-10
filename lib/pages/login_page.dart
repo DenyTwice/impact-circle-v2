@@ -4,25 +4,34 @@ import 'package:impact_circle/components/my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
+import 'package:impact_circle/pages/community_page.dart';
 
-class LoginPage extends StatefulWidget {
+class Login extends StatefulWidget {
   final VoidCallback onClickedSignUp;
 
-  const LoginPage({
+  const Login({
     Key? key,
     required this.onClickedSignUp,
   }) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Login> createState() => _LoginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   // Sign in method
   Future signIn() async {
+    // ...existing code for signing in...
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MyCommunity()),
+    );
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -73,13 +82,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
+                  
                   // Username textfield
                   MyTextField(
                       controller: emailController,
                       hintText: 'Email',
                       obscureText: false,
-                      prefixIcon: const Icon(Icons.email,
-                          color: Color.fromARGB(255, 219, 79, 24))),
+                      prefixIcon:const  Icon(
+                        Icons.email,
+                        color: Color.fromARGB(255, 219, 79, 24)
+                      )),
 
                   const SizedBox(height: 25),
                   MyTextField(
