@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:impact_circle/pages/community.dart';
+import 'package:impact_circle/pages/community_page.dart';
 import 'package:impact_circle/pages/profilepage.dart';
 
 void main() => runApp(const Requests());
@@ -24,7 +24,7 @@ class Requests extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MyCommunity(),
+                      builder: (context) => const Communities(),
                     ),
                   );
                 },

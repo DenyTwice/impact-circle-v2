@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/login_page.dart';
 
-import 'community.dart';
+import 'community_page.dart';
 
 class ProfilePage extends StatefulWidget {
   String userName;
@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
             onTap: () {
                   Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const MyCommunity()),
+      MaterialPageRoute(builder: (context) => const Communities()),
     );
             },
             selectedColor: const Color.fromARGB(255, 219, 79, 24),
