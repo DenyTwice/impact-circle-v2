@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:impact_circle/pages/auth.dart';
+import 'package:impact_circle/pages/auth_page.dart';
 import 'package:impact_circle/pages/community.dart';
-import 'pages/login.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -33,7 +32,7 @@ class Main extends StatelessWidget {
         } else if (snapshot.hasData) {
           return const MyCommunity();
         } else {
-          return const AuthPage();
+          return const AuthenticationPage();
         }
 
       }

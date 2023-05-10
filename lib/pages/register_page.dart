@@ -3,28 +3,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:impact_circle/components/my_textfield.dart';
-
 import '../components/my_button.dart';
 
-class Register extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final VoidCallback onClickedSignUp;
 
-  const Register({
+  const RegisterPage({
     Key? key,
     required this.onClickedSignUp,
   }) : super(key: key);
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterPageState extends State<RegisterPage> {
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   // Sign up function
   Future signUp() async {
+    
     // Show circular loading indicator
     showDialog(
       context: context,
