@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/profilepage.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:math';
 import 'package:impact_circle/pages/request.dart';
 
 
@@ -10,6 +12,7 @@ class Community {
 
   Community({required this.name, required this.description});
 }
+
 
 class MyCommunity extends StatefulWidget {
   const MyCommunity({Key? key}) : super(key: key);
@@ -135,14 +138,62 @@ class AddGroupDialog extends StatefulWidget {
 }
 
 class _AddGroupDialogState extends State<AddGroupDialog> {
-    final _nameController = TextEditingController();
-  final _descriptionController = TextEditingController();
+
+  final database = FirebaseDatabase.instance.ref();
+
+  // Try to save to Realtime Database
+  void saveToDatabase(String nodeID) async {
+    try {
+      await database.child('/communities/$nodeID').set({
+        'name': commNameController.text,
+        'description': commDescController.text
+      });
+    } catch (e) {
+      print(e); //! Show to user and cancel save
+    }
+  }
+
+  // Performs three parts:
+  // Generating random ID for node, checking if ID is already used and finally
+  // Saving it to database.
+  void intiateSave() {
+    String nodeID = generateRandomString(8);
+    do {
+      nodeID = generateRandomString(8);
+    } while (checkIfNodeExists('/communities/$nodeID'));
+
+    saveToDatabase(nodeID);
+  }
+
+  // Generate random ID from characters from $chars
+  String generateRandomString(int len) {
+    var r = Random();
+    const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
+  }
+
+  // Check if ID is already used
+  bool checkIfNodeExists(String node) {
+    bool nodeExists = false;
+
+    database.child('/communities/$node').onValue.listen((DatabaseEvent event) {
+      if (event.snapshot.value != null) {
+        nodeExists = true;
+      }
+    });
+
+    return nodeExists;
+  }
+
+  final commNameController = TextEditingController();
+  final commDescController = TextEditingController();
    @override
   void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
+    commNameController.dispose();
+    commDescController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -163,14 +214,14 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _nameController,
+                controller: commNameController,
                 decoration: const InputDecoration(
                   labelText: "Community Name",
                 ),
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _descriptionController,
+                controller: commDescController,
                 decoration: const InputDecoration(
                   labelText: "Community Description",
                 ),
@@ -178,7 +229,8 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  widget.onAddCommunity(_nameController.text, _descriptionController.text);
+                  intiateSave();
+                  widget.onAddCommunity(commNameController.text, commDescController.text);
                   Navigator.pop(context);
                 },
                 style: ButtonStyle(
@@ -200,9 +252,10 @@ void nextScreenReplace(context, page) {
       context, MaterialPageRoute(builder: (context) => page));
 }
 
- Future<void> _dialogBuilder(BuildContext context) {
+Future<void> _dialogBuilder(BuildContext context) {
   final user = FirebaseAuth.instance.currentUser!;
   final email = user.email;
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
