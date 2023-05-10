@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:impact_circle/main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:impact_circle/components/my_textfield.dart';
+
 import '../components/my_button.dart';
 
 class Register extends StatefulWidget {
@@ -45,7 +46,7 @@ class _RegisterState extends State<Register> {
     // Remove circular loading indicator
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,7 +71,6 @@ class _RegisterState extends State<Register> {
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w400)
                       ),
-                  
                   SizedBox(
                     child: Image.asset(
                       'assets/images/register.png',
@@ -108,7 +108,9 @@ class _RegisterState extends State<Register> {
                   
                   // Sign up button
                   MyButton(
+                    text: 'Register',
                     onTap: signUp,
+                    
                   ),
                   const SizedBox(height: 20),
                   
@@ -133,14 +135,18 @@ class _RegisterState extends State<Register> {
                           ),
                         )
                       ],
-                    ),
-                  )
-                ],
-              ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

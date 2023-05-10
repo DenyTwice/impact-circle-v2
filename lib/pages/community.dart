@@ -3,6 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/profilepage.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:math';
+import 'package:impact_circle/pages/request.dart';
+
+
+class Community {
+  final String name;
+  final String description;
+
+  Community({required this.name, required this.description});
+}
+
 
 class MyCommunity extends StatefulWidget {
   const MyCommunity({Key? key}) : super(key: key);
@@ -12,6 +22,8 @@ class MyCommunity extends StatefulWidget {
 }
 
 class _MyCommunityState extends State<MyCommunity> {
+  List<Community> _communities = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,119 +44,74 @@ class _MyCommunityState extends State<MyCommunity> {
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
         ),
       ),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                )
-              ]),
-          height: 200,
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            margin: const EdgeInsets.all(10),
-            child: const ListTile(
-              title: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  "Cleaning",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              subtitle: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  "Tap to see all the cleaning events happening",
-                  textAlign: TextAlign.left,
+      body: ListView.builder(
+        itemCount: _communities.length,
+        itemBuilder: (context, index) {
+          final community = _communities[index];
+          return Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    )
+                  ]),
+              height: 200,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                margin: const EdgeInsets.all(10),
+                child: ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      community.name,
+                      style:
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      community.description,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  trailing: SizedBox(
+                    height: 30,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Requests(),
+                          ),
+                        );
+                      },
+                      child: const Text("View Requests"),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
-      drawer: Drawer(
-          child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 50),
-        children: <Widget>[
-          Icon(
-            Icons.account_circle,
-            size: 150,
-            color: Colors.grey[700],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          // Text(
-          //   userName,
-          //   textAlign: TextAlign.center,
-          //   style: const TextStyle(fontWeight: FontWeight.bold),
-          // ),
-          const SizedBox(
-            height: 30,
-          ),
-          const Divider(
-            height: 2,
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyCommunity()),
-              );
-            },
-            selectedColor: const Color.fromARGB(255, 219, 79, 24),
-            selected: true,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            leading: const Icon(Icons.group),
-            title: const Text(
-              "Community",
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-          ListTile(
-            onTap: () => _dialogBuilder(context),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            leading: const Icon(Icons.group),
-            title: const Text(
-              "Profile",
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              await FirebaseAuth.instance.signOut();
-              // Navigator.pushAndRemoveUntil(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Login(onClickedSignUp: () {  },)),
-              //   (route) => false,
-              // );
-            },
-            child: const ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              leading: Icon(Icons.exit_to_app),
-              title: Text(
-                "Logout",
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          )
-        ],
-      )),
-      floatingActionButton: FloatingActionButton(
+  floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
             context: context,
             builder: (context) {
-              return const AddGroupDialog();
+              return AddGroupDialog(onAddCommunity: (name, description) {
+                setState(() {
+                  _communities.add(Community(name: name, description: description));
+                });
+              });
             },
           );
         },
@@ -155,21 +122,23 @@ class _MyCommunityState extends State<MyCommunity> {
           color: Colors.white,
           size: 30,
         ),
-      ),
-    );
+      ));
+    
   }
 }
 
-groupList() {}
 
 class AddGroupDialog extends StatefulWidget {
-  const AddGroupDialog({Key? key}) : super(key: key);
+    final Function(String, String) onAddCommunity;
 
+  const AddGroupDialog({Key? key, required this.onAddCommunity}) : super(key: key);
+ 
   @override
   _AddGroupDialogState createState() => _AddGroupDialogState();
 }
 
 class _AddGroupDialogState extends State<AddGroupDialog> {
+
   final database = FirebaseDatabase.instance.ref();
 
   // Try to save to Realtime Database
@@ -218,6 +187,12 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
 
   final commNameController = TextEditingController();
   final commDescController = TextEditingController();
+   @override
+  void dispose() {
+    commNameController.dispose();
+    commDescController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -255,13 +230,14 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
               ElevatedButton(
                 onPressed: () {
                   intiateSave();
+                  widget.onAddCommunity(commNameController.text, commDescController.text);
                   Navigator.pop(context);
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 219, 79, 24)),
                 ),
-                child: const Center(child: Text("Add Community")),
+                child: const Center(child: Text("Add Community",style: TextStyle(color: Colors.white),)),
               ),
             ],
           ),
@@ -279,36 +255,31 @@ void nextScreenReplace(context, page) {
 Future<void> _dialogBuilder(BuildContext context) {
   final user = FirebaseAuth.instance.currentUser!;
   final email = user.email;
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('$email'),
-        content: const Text('A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.'),
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('$email',),
+          content: const Text('A dialog is a type of modal window that\n'
+              'appears in front of app content to\n'
+              'provide critical information, or prompt\n'
+              'for a decision to be made.'),
+          actions: <Widget>[
+            Center(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Logout'),
+                onPressed: () 
+                  async {
+    await FirebaseAuth.instance.signOut();
+                },
+              ),
             ),
-            child: const Text('Disable'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('Enable'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+
+          ],
+        );
+      },
+    );} 
