@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/profilepage.dart';
+import 'package:impact_circle/pages/requests.dart'; // Import requests.dart
 
 import 'login.dart';
 
@@ -12,9 +13,6 @@ class MyCommunity extends StatefulWidget {
 }
 
 class _MyCommunityState extends State<MyCommunity> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,92 +20,103 @@ class _MyCommunityState extends State<MyCommunity> {
         backgroundColor: const Color.fromARGB(255, 219, 79, 24),
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
-              ))
+            onPressed: () {},
+            icon: const Icon(
+              Icons.search,
+            ),
+          )
         ],
         elevation: 0,
         centerTitle: true,
         title: const Text(
           "Community",
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 27),
         ),
       ),
-
       body: Align(
         alignment: Alignment.topCenter,
-  child: Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.3),
-          blurRadius: 5,
-          offset: const Offset(0, 3),
-        )
-      ]
-    ),
-    
-    height: 200,
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20)
-      ),
-      margin: const EdgeInsets.all(10),
-      child: const ListTile(
-      
-        title:  Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Text("Cleaning",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),textAlign: TextAlign.left,),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
+                )
+              ]),
+          height: 200,
+          child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20)),
+            margin: const EdgeInsets.all(10),
+            child: ListTile(
+              title: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Cleaning",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 30),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Tap to see all the cleaning events happening",
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              // Add a new button to see requests
+              trailing: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Requests(),
+                    ),
+                  );
+                },
+                child: const Text("See Requests"),
+              ),
+            ),
+          ),
         ),
-        subtitle:  Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Text("Tap to see all the cleaning events happening",textAlign: TextAlign.left,),
-        ),
       ),
-    ),
-  ),
-),
-
-      
       drawer: Drawer(
-          child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 50),
-        children: <Widget>[
-          Icon(
-            Icons.account_circle,
-            size: 150,
-            color: Colors.grey[700],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          // Text(
-          //   userName,
-          //   textAlign: TextAlign.center,
-          //   style: const TextStyle(fontWeight: FontWeight.bold),
-          // ),
-          const SizedBox(
-            height: 30,
-          ),
-          const Divider(
-            height: 2,
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyCommunity()),
-              );
-            },
-            selectedColor: const Color.fromARGB(255, 219, 79, 24),
-            selected: true,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            leading: const Icon(Icons.group),
-            title: const Text(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 50),
+          children: <Widget>[
+            Icon(
+              Icons.account_circle,
+              size: 150,
+              color: Colors.grey[700],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Divider(
+              height: 2,
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyCommunity()),
+                );
+              },
+              selectedColor: const Color.fromARGB(255, 219, 79, 24),
+              selected: true,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              leading: const Icon(Icons.group),
+              title: const Text(
               "Community",
               style: TextStyle(color: Colors.black),
             ),
