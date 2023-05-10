@@ -62,7 +62,7 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    "Login now to become one among us..",
+                    "Welcome back!",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
@@ -74,16 +74,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
 
-                  const Text(
-                    'LOGIN',
-                    style: TextStyle(
-                      fontSize: 40,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20),
+                  
                   // Username textfield
                   MyTextField(
                       controller: emailController,
@@ -115,12 +106,12 @@ class _LoginState extends State<Login> {
                       style: const TextStyle(
                           color: Color.fromARGB(255, 219, 79, 24),
                           fontSize: 16),
-                      text: 'New user?  ',
+                      text: "Don't have an account? ",
                       children: [
                         TextSpan(
                           recognizer: TapGestureRecognizer()
                             ..onTap = widget.onClickedSignUp,
-                          text: 'Sign Up',
+                          text: 'Register here',
                           style: const TextStyle(
                             decoration: TextDecoration.underline,
                             color: Colors.black,
