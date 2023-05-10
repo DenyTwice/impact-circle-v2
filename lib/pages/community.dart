@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:impact_circle/pages/profilepage.dart';
 
+import 'login.dart';
 
 class MyCommunity extends StatefulWidget {
   const MyCommunity({Key? key}) : super(key: key);
@@ -9,24 +12,20 @@ class MyCommunity extends StatefulWidget {
 }
 
 class _MyCommunityState extends State<MyCommunity> {
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 219, 79, 24),
         actions: [
           IconButton(
-              onPressed: () {
-
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.search,
               ))
         ],
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
         title: const Text(
           "Community",
           style: TextStyle(
@@ -57,8 +56,13 @@ class _MyCommunityState extends State<MyCommunity> {
             height: 2,
           ),
           ListTile(
-            onTap: () {},
-            selectedColor: Theme.of(context).primaryColor,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MyCommunity()),
+              );
+            },
+            selectedColor: const Color.fromARGB(255, 219, 79, 24),
             selected: true,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -68,96 +72,69 @@ class _MyCommunityState extends State<MyCommunity> {
               style: TextStyle(color: Colors.black),
             ),
           ),
-          const ListTile(
-            // onTap: () {
-            //   nextScreenReplace(
-            //       context,
-            //       ProfilePage(
-            //         userName: userName,
-            //         email: email,
-            //       ));
-            // },
+          ListTile(
+            onTap: () {
+              nextScreenReplace(
+                  context,
+                  ProfilePage(
+                    userName: "userName",
+                    email: "email",
+                  ));
+            },
             contentPadding:
-                 EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            leading:  Icon(Icons.group),
-            title:  Text(
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            leading: const Icon(Icons.group),
+            title: const Text(
               "Profile",
               style: TextStyle(color: Colors.black),
             ),
           ),
-          ListTile(
-            onTap: () async {
-              showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text("Logout"),
-                      content: const Text("Are you sure you want to logout?"),
-                      actions: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.cancel,
-                            color: Colors.red,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () async {
-                          
-                            // Navigator.of(context).pushAndRemoveUntil(
-                            //     MaterialPageRoute(
-                            //         builder: (context) => const Login()),
-                            //     (route) => false);
-                          },
-                          icon: const Icon(
-                            Icons.done,
-                            color: Colors.green,
-                          ),
-                        ),
-                      ],
-                    );
-                  });
-            },
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            leading: const Icon(Icons.exit_to_app),
-            title: const Text(
-              "Logout",
-              style: TextStyle(color: Colors.black),
-            ),
-          )
+GestureDetector(
+  onTap: () async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => Login(onClickedSignUp: () {  },)),
+      (route) => false,
+    );
+  },
+  child: const ListTile(
+    contentPadding:
+         EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+    leading:  Icon(Icons.exit_to_app),
+    title:  Text(
+      "Logout",
+      style: TextStyle(color: Colors.black),
+    ),
+  ),
+)
+
         ],
       )),
       body: groupList(),
-floatingActionButton: FloatingActionButton(
-  onPressed: () {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const AddGroupDialog();
-      },
-    );
-  },
-  elevation: 0,
-  backgroundColor: Theme.of(context).primaryColor,
-  child: const Icon(
-    Icons.add,
-    color: Colors.white,
-    size: 30,
-  ),
-),
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const AddGroupDialog();
+            },
+          );
+        },
+        elevation: 0,
+        backgroundColor: const Color.fromARGB(255, 219, 79, 24),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
+        ),
+      ),
     );
   }
 
+  groupList() {}
+}
 
-  groupList(){}
-
-
-  }
 class AddGroupDialog extends StatefulWidget {
   const AddGroupDialog({Key? key}) : super(key: key);
 
@@ -197,9 +174,12 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Implement your logic to add the new group
                 Navigator.pop(context);
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 219, 79, 24)),
+              ),
               child: const Text("Add Community"),
             ),
           ],
@@ -207,4 +187,9 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
       ),
     );
   }
+}
+
+void nextScreenReplace(context, page) {
+  Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => page));
 }
