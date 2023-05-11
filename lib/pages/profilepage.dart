@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
             onTap: () {
                   Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Communities()),
+      MaterialPageRoute(builder: (context) => const MyCommunity()),
     );
             },
             selectedColor: const Color.fromARGB(255, 219, 79, 24),

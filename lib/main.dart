@@ -30,9 +30,9 @@ class Main extends StatelessWidget {
         } else if (snapshot.hasError) {
           return const Center(child: Text('Something went wrong try again!'));
         } else if (snapshot.hasData) {
-          return const Communities();
+          return const MyCommunity();
         } else {
-          return const AuthenticationPage();
+          return const AuthPage();
         }
 
       }

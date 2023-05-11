@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:impact_circle/pages/request.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:math';
 
 class Community {
   final String name;
@@ -86,7 +88,7 @@ class _MyCommunityState extends State<MyCommunity> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Requests(),
+                              builder: (context) => MyRequests(),
                             ),
                           );
                         },
@@ -124,12 +126,12 @@ class _MyCommunityState extends State<MyCommunity> {
   }
 }
 
-
 class AddGroupDialog extends StatefulWidget {
-    final Function(String, String) onAddCommunity;
+  final Function(String, String) onAddCommunity;
 
-  const AddGroupDialog({Key? key, required this.onAddCommunity}) : super(key: key);
- 
+  const AddGroupDialog({Key? key, required this.onAddCommunity})
+      : super(key: key);
+
   @override
   _AddGroupDialogState createState() => _AddGroupDialogState();
 }
@@ -186,10 +188,11 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
+    commNameController.dispose();
+    commDescController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -210,14 +213,14 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _nameController,
+                controller: commNameController,
                 decoration: const InputDecoration(
                   labelText: "Community Name",
                 ),
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _descriptionController,
+                controller: commDescController,
                 decoration: const InputDecoration(
                   labelText: "Community Description",
                 ),
@@ -225,14 +228,19 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  widget.onAddCommunity(_nameController.text, _descriptionController.text);
+                  widget.onAddCommunity(
+                      commNameController.text, commDescController.text);
                   Navigator.pop(context);
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 219, 79, 24)),
                 ),
-                child: const Center(child: Text("Add Community",style: TextStyle(color: Colors.white),)),
+                child: const Center(
+                    child: Text(
+                  "Add Community",
+                  style: TextStyle(color: Colors.white),
+                )),
               ),
             ],
           ),
@@ -279,61 +287,51 @@ void searchDatabase(String? valueToSearch) {
 Future<void> _dialogBuilder(BuildContext context) {
   final user = FirebaseAuth.instance.currentUser!;
   final email = user.email;
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-  title:  Padding(
-    padding: const EdgeInsets.all(10.0),
-    child: Text(
-      '$email',
-      style: const TextStyle(
-        fontSize: 18.0,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-  ),
-  content: const Text(
-    'You will be logged out of your account when you click the "Logout" button.',
-    style: TextStyle(
-      fontSize: 16.0,
-    ),
-  ),
-  actions: <Widget>[
-    TextButton.icon(
-      style: TextButton.styleFrom(
-        backgroundColor: Colors.red,
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-      ),
-      icon: const Icon(
-        Icons.logout,
-        color: Colors.white,
-      ),
-      label:const  Text(
-        'Logout',
-        style: TextStyle(
-          fontSize: 18.0,
-          color: Colors.white,
-        ),
-        content: const Text('A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.'),
-        actions: <Widget>[
-          Center(
-            child: TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Logout'),
-              onPressed: () async {
-                Navigator.pop(context);
-                await FirebaseAuth.instance.signOut();
-              },
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            '$email',
+            style: const TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
             ),
+          ),
+        ),
+        content: const Text(
+          'You will be logged out of your account when you click the "Logout" button.',
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+        actions: <Widget>[
+          TextButton.icon(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.red,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+            label: const Text(
+              'Logout',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.white,
+              ),
+            ),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.of(context).pop();
+            },
           ),
         ],
       );
