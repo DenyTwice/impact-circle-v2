@@ -21,6 +21,20 @@ class MyCommunity extends StatefulWidget {
 class _MyCommunityState extends State<MyCommunity> {
   List<Community> _communities = [];
 
+  void getCommunityMap() { 
+    DatabaseReference communitiesRef = FirebaseDatabase.instance.ref('communities');
+    communitiesRef.onValue.listen((DatabaseEvent event)  {
+    var snapshotValue = event.snapshot.value;
+    if (snapshotValue != null) {
+    Map<dynamic, dynamic> data = event.snapshot.value as Map<dynamic, dynamic>;
+    data.forEach((key, value) {
+      print("Community ID: $key");
+      print("Name: ${value['name']}");
+      print("Description: ${value['description']}");
+    });
+  }});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,19 +116,19 @@ class _MyCommunityState extends State<MyCommunity> {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AddGroupDialog(onAddCommunity: (name, description) {
-                  setState(() {
-                    _communities
-                        .add(Community(name: name, description: description));
-                  });
-                });
-              },
-            );
-          },
+          onPressed: getCommunityMap,
+            // showDialog(
+            //   context: context,
+            //   builder: (context) {
+            //     return AddGroupDialog(onAddCommunity: (name, description) {
+            //       setState(() {
+            //         _communities
+            //             .add(Community(name: name, description: description));
+            //       });
+            //     });
+            //   },
+            // );
+          // },
           elevation: 0,
           backgroundColor: const Color.fromARGB(255, 219, 79, 24),
           child: const Icon(
@@ -257,18 +271,17 @@ void nextScreenReplace(context, page) {
 
 final databaseReference = FirebaseDatabase.instance.ref('users');
 
-
 String? searchDatabase(String? valueToSearch) {
   databaseReference
       .orderByChild('email')
       .equalTo(valueToSearch)
       .onValue
       .listen((event) {
-      RegExp regExp = RegExp(r'username:\s*(\S.*?)\s*(?=}})');
-      Match? match = regExp.firstMatch(event.snapshot.value.toString());
-      if (match != null) {
-        var username = match.group(1);
-    } 
+    RegExp regExp = RegExp(r'username:\s*(\S.*?)\s*(?=}})');
+    Match? match = regExp.firstMatch(event.snapshot.value.toString());
+    if (match != null) {
+      var username = match.group(1);
+    }
   });
 }
 
