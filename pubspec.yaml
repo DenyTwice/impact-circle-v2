@@ -41,6 +41,7 @@ flutter:
      - assets/images/bgc.png
      - assets/images/login.png
      - assets/images/register.png
+     - assets/images/cleaning.jpg
 
   # fonts:
   #   - family: Schyler

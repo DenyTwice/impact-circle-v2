@@ -20,6 +20,7 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
+    theme: ThemeData(useMaterial3: true),
     navigatorKey: navigatorKey,
     home: StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
