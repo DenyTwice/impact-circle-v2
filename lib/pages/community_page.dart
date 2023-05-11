@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:impact_circle/pages/profilepage.dart';
 import 'package:impact_circle/pages/request.dart';
 
 
@@ -57,7 +56,7 @@ class _MyCommunityState extends State<MyCommunity> {
                       offset: const Offset(0, 3),
                     )
                   ]),
-              height: 200,
+              height: 250,
               child: Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
@@ -86,7 +85,7 @@ class _MyCommunityState extends State<MyCommunity> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Requests(),
+                            builder: (context) =>  const MyRequests(),
                           ),
                         );
                       },
@@ -207,26 +206,49 @@ void nextScreenReplace(context, page) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('$email',),
-          content: const Text('A dialog is a type of modal window that\n'
-              'appears in front of app content to\n'
-              'provide critical information, or prompt\n'
-              'for a decision to be made.'),
-          actions: <Widget>[
-            Center(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.labelLarge,
-                ),
-                child: const Text('Logout'),
-                onPressed: () 
-                  async {
-    await FirebaseAuth.instance.signOut();
-                },
-              ),
-            ),
+  title:  Padding(
+    padding: const EdgeInsets.all(10.0),
+    child: Text(
+      '$email',
+      style: const TextStyle(
+        fontSize: 18.0,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  ),
+  content: const Text(
+    'You will be logged out of your account when you click the "Logout" button.',
+    style: TextStyle(
+      fontSize: 16.0,
+    ),
+  ),
+  actions: <Widget>[
+    TextButton.icon(
+      style: TextButton.styleFrom(
+        backgroundColor: Colors.red,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
+      icon: const Icon(
+        Icons.logout,
+        color: Colors.white,
+      ),
+      label:const  Text(
+        'Logout',
+        style: TextStyle(
+          fontSize: 18.0,
+          color: Colors.white,
+        ),
+      ),
+      onPressed: () async {
+        await FirebaseAuth.instance.signOut();
+         Navigator.of(context).pop();
+      },
+    ),
+  ],
+);
 
-          ],
-        );
       },
     );} 
