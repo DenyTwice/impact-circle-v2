@@ -16,9 +16,9 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: SizedBox(
-        height: 45,
+        height: 40,
         child: TextField(
           textAlign: TextAlign.center,
           controller: controller,
@@ -29,13 +29,13 @@ class MyTextField extends StatelessWidget {
             
   labelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
   focusedBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 1),
   ),
   enabledBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 1),
   ),
   errorBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 1),
   ),
 ))));
   }

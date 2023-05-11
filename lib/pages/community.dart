@@ -12,6 +12,9 @@ class MyCommunity extends StatefulWidget {
 }
 
 class _MyCommunityState extends State<MyCommunity> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +35,43 @@ class _MyCommunityState extends State<MyCommunity> {
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
         ),
       ),
+
+      body: Align(
+        alignment: Alignment.topCenter,
+  child: Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.3),
+          blurRadius: 5,
+          offset: const Offset(0, 3),
+        )
+      ]
+    ),
+    
+    height: 200,
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
+      ),
+      margin: const EdgeInsets.all(10),
+      child: const ListTile(
+      
+        title:  Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Text("Cleaning",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),textAlign: TextAlign.left,),
+        ),
+        subtitle:  Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Text("Tap to see all the cleaning events happening",textAlign: TextAlign.left,),
+        ),
+      ),
+    ),
+  ),
+),
+
+      
       drawer: Drawer(
           child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 50),
@@ -111,7 +151,8 @@ GestureDetector(
 
         ],
       )),
-      body: groupList(),
+      
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
@@ -131,9 +172,10 @@ GestureDetector(
       ),
     );
   }
+    
+  }
 
   groupList() {}
-}
 
 class AddGroupDialog extends StatefulWidget {
   const AddGroupDialog({Key? key}) : super(key: key);
@@ -146,43 +188,48 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Add a New Community",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+      child: SizedBox(
+        height: 300,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+      
+            children: [
+              const Center(
+                child:  Text(
+                  "Add a New Community",
+                  style: TextStyle(
+                      
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: "Community Name",
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Community Name",
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: "Community Description",
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Community Description",
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromARGB(255, 219, 79, 24)),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 219, 79, 24)),
+                ),
+                child: const Center(child: Text("Add Community")),
               ),
-              child: const Text("Add Community"),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
