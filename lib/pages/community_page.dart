@@ -116,19 +116,19 @@ class _MyCommunityState extends State<MyCommunity> {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: getCommunityMap,
-            // showDialog(
-            //   context: context,
-            //   builder: (context) {
-            //     return AddGroupDialog(onAddCommunity: (name, description) {
-            //       setState(() {
-            //         _communities
-            //             .add(Community(name: name, description: description));
-            //       });
-            //     });
-            //   },
-            // );
-          // },
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AddGroupDialog(onAddCommunity: (name, description) {
+                  setState(() {
+                    _communities
+                        .add(Community(name: name, description: description));
+                  });
+                });
+              },
+            );
+          },
           elevation: 0,
           backgroundColor: const Color.fromARGB(255, 219, 79, 24),
           child: const Icon(
