@@ -19,8 +19,9 @@ class MyCommunity extends StatefulWidget {
 }
 
 class _MyCommunityState extends State<MyCommunity> {
-  List<Community> _communities = [];
+  final List<Community> _communities = [];
 
+  // Return map of every node in communities
   void getCommunityMap() { 
     DatabaseReference communitiesRef = FirebaseDatabase.instance.ref('communities');
     communitiesRef.onValue.listen((DatabaseEvent event)  {
@@ -57,6 +58,7 @@ class _MyCommunityState extends State<MyCommunity> {
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27),
           ),
         ),
+        
         body: ListView.builder(
           itemCount: _communities.length,
           itemBuilder: (context, index) {
@@ -102,7 +104,7 @@ class _MyCommunityState extends State<MyCommunity> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyRequests(),
+                              builder: (context) => const MyRequests(),
                             ),
                           );
                         },
@@ -147,7 +149,7 @@ class AddGroupDialog extends StatefulWidget {
       : super(key: key);
 
   @override
-  _AddGroupDialogState createState() => _AddGroupDialogState();
+  State<AddGroupDialog> createState() => _AddGroupDialogState();
 }
 
 class _AddGroupDialogState extends State<AddGroupDialog> {
@@ -216,6 +218,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
+
               const Center(
                 child: Text(
                   "Add a New Community",
@@ -225,6 +228,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 16),
               TextFormField(
                 controller: commNameController,
@@ -232,6 +236,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                   labelText: "Community Name",
                 ),
               ),
+
               const SizedBox(height: 16),
               TextFormField(
                 controller: commDescController,
@@ -239,6 +244,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
                   labelText: "Community Description",
                 ),
               ),
+              
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
@@ -270,8 +276,9 @@ void nextScreenReplace(context, page) {
       context, MaterialPageRoute(builder: (context) => page));
 }
 
+// Get username of user
+//: Replace email in alert dialog with username
 final databaseReference = FirebaseDatabase.instance.ref('users');
-
 String? searchDatabase(String? valueToSearch) {
   databaseReference
       .orderByChild('email')

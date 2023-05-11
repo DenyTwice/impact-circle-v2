@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:core';
 
 class Requests {
   final String name;
@@ -18,6 +20,43 @@ class MyRequests extends StatefulWidget {
 class _MyRequestsState extends State<MyRequests> {
   List<Requests> _requests = [];
 
+void getRequestMap() { 
+  var requests = [];
+  DatabaseReference communitiesRef = FirebaseDatabase.instance.ref('communities');
+  communitiesRef.onValue.listen((DatabaseEvent event)  {
+    var snapshotValue = event.snapshot.value;
+    if (snapshotValue != null) {
+      Map<dynamic, dynamic> data = event.snapshot.value as Map<dynamic, dynamic>;
+      data.forEach((key, value) {
+        print("Community ID: $key");
+        print("Name: ${value['name']}");
+        print("Description: ${value['description']}");
+        requests.add(key.toString());
+        // DatabaseReference requestsRef = FirebaseDatabase.instance.ref('communities/$key');
+        // requestsRef.onValue.listen((DatabaseEvent event)  {
+        //   var rsnapshotValue = event.snapshot.value;
+        //   if (rsnapshotValue != null) {
+        //     Map<dynamic, dynamic> rdata = event.snapshot.value as Map<dynamic, dynamic>;
+        //     rdata.forEach((rkey, rvalue) {
+        //       print("Community ID: $rkey");
+        //       print("Name: ${rvalue['name']}");
+        //       print("Description: ${rvalue['description']}");
+        //     });
+        //   }
+        // });
+      });
+    }
+  });
+  requests.forEach((element) {
+      DatabaseReference requestsRef = FirebaseDatabase.instance.ref('communities/$element');
+      requestsRef.onValue.listen((DatabaseEvent event)  {
+
+  });
+  
+}
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +64,7 @@ class _MyRequestsState extends State<MyRequests> {
           backgroundColor: const Color.fromARGB(255, 219, 79, 24),
           actions: [
             IconButton(
-                onPressed: () => _dialogBuilder(context),
+                onPressed: getRequestMap,
                 icon: const Icon(
                   Icons.account_circle,
                 ))
@@ -84,11 +123,11 @@ class _MyRequestsState extends State<MyRequests> {
                           onPressed: () {
                             //volunteer for that request
                           },
-                          child: const Text("Volunteer"),
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 const Color.fromARGB(255, 219, 79, 24)),
                           ),
+                          child: const Text("Volunteer"),
                         ),
                       ),
                     ),
