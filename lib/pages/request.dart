@@ -23,6 +23,18 @@ class MyRequests extends StatefulWidget {
 class _MyRequestsState extends State<MyRequests> {
   List<Requests> _requests = [];
 
+  void getCommunityMap(String nodeID) {
+    DatabaseReference communitiesRef = FirebaseDatabase.instance.ref('communities/$nodeID');
+    communitiesRef.onValue.listen((DatabaseEvent event) {
+      var snapshotValue = event.snapshot.value;
+      if (snapshotValue != null) {
+        Map<dynamic, dynamic> data = event.snapshot.value as Map<dynamic, dynamic>;
+          data.forEach((key, value) { 
+            print(value['requests']);
+          });
+      }
+    });
+  }
   // void getRequestMap() {
   //   var requests = [];
   //   DatabaseReference communitiesRef =
@@ -140,7 +152,8 @@ class _MyRequestsState extends State<MyRequests> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed:
+          () {
             showDialog(
               context: context,
               builder: (context) {
