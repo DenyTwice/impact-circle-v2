@@ -113,7 +113,7 @@ import 'package:firebase_auth/firebase_auth.dart';
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MyRequests(),
+                                builder: (context) => MyRequests(communityName: community.name),
                               ),
 
 );
@@ -170,7 +170,10 @@ import 'package:firebase_auth/firebase_auth.dart';
       try {
         await database.child('/communities/$nodeID').set({
           'name': commNameController.text,
-          'description': commDescController.text
+          'description': commDescController.text,
+          'requests': {
+            'template': 'template'
+          }
         });
       } catch (e) {
         print(e); //! Show to user and cancel save
