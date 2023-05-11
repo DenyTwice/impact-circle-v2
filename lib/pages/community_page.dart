@@ -168,7 +168,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
   // Performs three parts:
   // Generating random ID for node, checking if ID is already used and finally
   // Saving it to database.
-  void intiateSave() {
+  void initiateSave() {
     String nodeID = generateRandomString(8);
     do {
       nodeID = generateRandomString(8);
@@ -242,6 +242,7 @@ class _AddGroupDialogState extends State<AddGroupDialog> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  initiateSave();
                   widget.onAddCommunity(
                       commNameController.text, commDescController.text);
                   Navigator.pop(context);
