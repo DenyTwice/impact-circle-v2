@@ -255,32 +255,20 @@ void nextScreenReplace(context, page) {
       context, MaterialPageRoute(builder: (context) => page));
 }
 
-String? getUsernameFromString(String userDataString) {
-  RegExp regExp = RegExp(r'username:\s*(\S.*?)\s*(?=}})');
-  Match? match = regExp.firstMatch(userDataString);
-  if (match != null) {
-    var username = match.group(1);
-    return username;
-  } else {
-    print('No username found in string');
-    return null;
-  }
-}
-
 final databaseReference = FirebaseDatabase.instance.ref('users');
 
-void searchDatabase(String? valueToSearch) {
+
+String? searchDatabase(String? valueToSearch) {
   databaseReference
       .orderByChild('email')
       .equalTo(valueToSearch)
       .onValue
       .listen((event) {
-    if (event.snapshot.value != null) {
-      print('Found value in database!');
-      getUsernameFromString(event.snapshot.value.toString());
-    } else {
-      print('Value not found in database.');
-    }
+      RegExp regExp = RegExp(r'username:\s*(\S.*?)\s*(?=}})');
+      Match? match = regExp.firstMatch(event.snapshot.value.toString());
+      if (match != null) {
+        var username = match.group(1);
+    } 
   });
 }
 
